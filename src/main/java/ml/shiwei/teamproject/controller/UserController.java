@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @RequestMapping
  * 在类处定义，规定初步的请求映射，相对于web应用的根目录
  */
-@RequestMapping("/user")
+@RequestMapping("/")
 public class UserController {
     //装载UserService接口对应实现类UserServiceImpl的对象
     @Autowired
@@ -24,7 +24,7 @@ public class UserController {
      * @RequestMapping
      * 在方法处定义，进一步细分请求映射，相对于类定义处的映射
      */
-    @RequestMapping(value="/index")
+    @RequestMapping(value="/")
     public String begin(){
         //返回begin.html页面给前端
         return "begin";
