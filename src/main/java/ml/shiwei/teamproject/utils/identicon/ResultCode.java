@@ -7,8 +7,10 @@ package ml.shiwei.teamproject.utils.identicon;
  */
 public enum ResultCode {
     SUCCESS(200,"请求成功"),
-    PASSWORD_ERROR(199,"密码错误"),
-    WARN(198,"网络异常，请稍后重试");
+    USERNAME_EMPTY(10000,"用户名为空"),
+    PASSWORD_ERROR(10001,"密码错误"),
+    TOKEN_OUTDATED(10002,"Token失效"),
+    TOKEN_EMPTY(10003,"Token为空");
 
     private final int code;
     private final String message;
