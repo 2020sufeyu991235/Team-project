@@ -34,7 +34,7 @@ public class UserController {
      */
     @RequestMapping("/login/html")
     public String loginHtml(){
-        return "login.html";
+        return "login";
     }
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
