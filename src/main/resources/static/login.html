@@ -11,7 +11,7 @@
             margin:100px auto;
         }
         span.help-block{
-            color:red!important;
+            color: #ff0000 !important;
             display:none;
         }
     </style>
@@ -65,24 +65,7 @@
                 }
             });
         }
-        $(function(){
-            var user=localStorage.getItem("user");
-            var userObj=JSON.parse(user);
-            var token=userObj.string;
-            if(token!=null){
-                $.ajax({
-                    url:"/user/login/token",
-                    type:"get",
-                    headers:{"token":token},
-                    success:function(data){
-                        console.log(data);
-                    },
-                    error:function(data){
-                        console.log(error);
-                    }
-                });
-            }
-        });
+
     </script>
 </body>
 </html>
