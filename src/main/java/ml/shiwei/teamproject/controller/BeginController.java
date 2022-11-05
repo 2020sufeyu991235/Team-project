@@ -14,6 +14,6 @@ public class BeginController {
     @RequestMapping("/")
     public String begin(){
         //返回初始界面
-        return "begin.html";
+        return "begin";
     }
 }

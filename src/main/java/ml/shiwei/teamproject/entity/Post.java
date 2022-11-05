@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Date;
 
 /**
  * @author: swl
@@ -32,9 +33,9 @@ public class Post implements Serializable {
     //图片存储路径
     private String path;
     //发布时间
-    private Time time;
+    private Date time;
     //最后评论时间
-    private Time comment_time;
+    private Date comment_time;
     //浏览次数
     private int views;
     //评论数
@@ -94,7 +95,7 @@ public class Post implements Serializable {
         this.path = path;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
@@ -102,7 +103,7 @@ public class Post implements Serializable {
         this.time = time;
     }
 
-    public Time getComment_time() {
+    public Date getComment_time() {
         return comment_time;
     }
 
