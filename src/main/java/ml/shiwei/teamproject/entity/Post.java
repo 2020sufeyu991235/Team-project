@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 
 /**
@@ -32,9 +33,9 @@ public class Post implements Serializable {
     //图片存储路径
     private String path;
     //发布时间
-    private Time time;
+    private Date time;
     //最后评论时间
-    private Time comment_time;
+    private Date comment_time;
     //浏览次数
     private int views;
     //评论数
@@ -70,7 +71,7 @@ public class Post implements Serializable {
         this.user_id = user_id;
     }
 
-    public String getTitle() {
+    public String getTitle(String title) {
         return title;
     }
 
@@ -94,19 +95,24 @@ public class Post implements Serializable {
         this.path = path;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public Time getComment_time() {
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getComment_time() {
         return comment_time;
     }
 
-    public void setComment_time(Time comment_time) {
+    public void setComment_time(Date comment_time) {
         this.comment_time = comment_time;
     }
 
@@ -144,6 +150,28 @@ public class Post implements Serializable {
 
     public int getStep() {
         return step;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", path='" + path + '\'' +
+                ", time=" + time +
+                ", comment_time=" + comment_time +
+                ", views=" + views +
+                ", comments=" + comments +
+                ", heat=" + heat +
+                ", likes=" + likes +
+                ", step=" + step +
+                ", food='" + food + '\'' +
+                ", price=" + price +
+                ", shop='" + shop + '\'' +
+                ", canteen='" + canteen + '\'' +
+                '}';
     }
 
     public void setStep(int step) {
