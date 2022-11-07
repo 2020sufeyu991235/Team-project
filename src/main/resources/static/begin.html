@@ -47,31 +47,42 @@
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
 <script>
-
-
-	var co=document.cookie.split(";");
-	for(var i=0;i<co.length;i++){
-		var c=co[i].trim();
-			if (c.indexOf("username=")===0) {
-				var username=null;
-				var nn="username="
-				username=c.substring(nn.length,c.length);
-					if (username!=="") {
-						document.getElementById("login").href="#";
-						document.getElementById("login").innerHTML=username;
-					}
-				}
-			if (c.indexOf("colorstyle=")===0){
-				var color=null;
-				var cc="colorstyle="
-				color=c.substring(cc.length,c.length);
-				if (color!=="") {
-					document.getElementById("csscolor").href="/css/"+color+"color.css";
-					document.getElementById(color).selected="selected";
-				}
-			}
-			}
-
+	var loginaq=document.getElementById("login");
+	loginaq.onclick=
+	function loginrequest(){
+		$.ajax({
+			url:'/user/login/html',
+			type:'get',
+			// async:false,
+                dataType:'html',
+                success:function(data){
+                	
+                    var newPage=window.open();
+                    newPage.document.write(data);
+                },
+                error:function(){
+                    console.log("fucking error")
+                }
+		});
+	}
+	$(function(){
+            var user=localStorage.getItem("user");
+            var userObj=JSON.parse(user);
+            var token=userObj.string;
+            if(token!=null){
+                $.ajax({
+                    url:"/user/login/token",
+                    type:"get",
+                    headers:{"token":token},
+                    success:function(data){
+                        console.log(data);
+                    },
+                    error:function(data){
+                        console.log(error);
+                    }
+                });
+            }
+        });
 
 
 	var ccolor=document.getElementById("csscolor");

@@ -23,7 +23,7 @@ public class JwtUtils {
     //过期时间
     public static final long EXPIRE=1000*60*30;
 
-    /*
+    /**
      * 生成Token对象
      * @param user  用户User实例
      * @return ml.shiwei.teamproject.entity.Token Token由到期时间Date和密文String组成

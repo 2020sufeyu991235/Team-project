@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.Date;
 
 /**
  * @author: swl
@@ -24,7 +24,7 @@ public class Post implements Serializable {
     private Long id;
 
     //发布用户id
-    private Long user_id;
+    private Long userId;
     //标题
     private String title;
     //内容
@@ -32,9 +32,9 @@ public class Post implements Serializable {
     //图片存储路径
     private String path;
     //发布时间
-    private Time time;
+    private Date time;
     //最后评论时间
-    private Time comment_time;
+    private Date comment_time;
     //浏览次数
     private int views;
     //评论数
@@ -62,12 +62,12 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -94,19 +94,19 @@ public class Post implements Serializable {
         this.path = path;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public Time getComment_time() {
+    public Date getComment_time() {
         return comment_time;
     }
 
-    public void setComment_time(Time comment_time) {
+    public void setComment_time(Date comment_time) {
         this.comment_time = comment_time;
     }
 
