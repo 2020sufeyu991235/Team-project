@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>食味</title>
-	<link rel="stylesheet" type="text/css" href="/css/HomePage.css">
+	<link rel="stylesheet" type="text/css" href="./css/HomePage.css">
 	<base target="_blank" />
 </head>
 <style>
@@ -54,8 +54,8 @@
 <body>
 
 		<header class="header">
-		<img src="/img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="#" class="home"><ion-icon name="home"></ion-icon>主页</a>
+		<img src="./img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="/" target="_self" class="home"><ion-icon name="home"></ion-icon>主页</a>
 		<a  class="login" id="login">登录</a>	
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
@@ -69,7 +69,7 @@
 	
 	<div class="mid">
 		<div class="content">
-			<img src="/img/gdutb.jpg" alt="" class="conimg">
+			<img src="./img/gdutb.jpg" alt="" class="conimg">
 			<div class="uname">广东工业大学</div>
 			<hr style="border: none;height: 1px;" >
 			<div class="zone">
@@ -89,13 +89,14 @@
 	<div id="openwi"></div>
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js">
 </script>
-<script type="text/javascript" src="/js/jquery-3.6.1.min.js">
+<script type="text/javascript" src="./js/jquery-3.6.1.min.js">
 </script>
 <script>
 	var loginaq=document.getElementById("login");
 	loginaq.onclick=
 	function loginrequest(){
-		$.ajax({
+		window.location.href='/user/login/html';
+		/*$.ajax({
 			url:'/user/login/html',
 			type:'get',
 			// async:false,
@@ -108,7 +109,7 @@
                 error:function(){
                     console.log("fucking error")
                 }
-		});
+		});*/
 	}
 	$(function(){
             var user=localStorage.getItem("user");
@@ -121,6 +122,11 @@
                     headers:{"token":token},
                     success:function(data){
                         console.log(data);
+						if(data.code!=200){
+							//Token失效，清空用户权限
+							localStorage.removeItem("list");
+							localStorage.removeItem("user");
+						}
                     },
                     error:function(data){
                         console.log(error);

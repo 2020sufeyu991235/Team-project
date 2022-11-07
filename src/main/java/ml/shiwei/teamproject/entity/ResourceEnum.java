@@ -9,7 +9,9 @@ public enum ResourceEnum {
     Begin(0,"/","初始界面"),
     LoginHtml(1,"/user/login/html","登录界面"),
     Login(2,"/user/login","登录请求"),
-    LoginWithToken(3,"/user/login/token","token自动登录");
+    LoginWithToken(3,"/user/login/token","token自动登录"),
+    Posting(4,"/posting","发帖请求"),
+    UploadImage(5,"/posting/upload","在帖子中上传图片");
 
     private final int id;
     private final String path;

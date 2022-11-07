@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -25,7 +24,7 @@ public class Post implements Serializable {
     private Long id;
 
     //发布用户id
-    private Long user_id;
+    private Long userId;
     //标题
     private String title;
     //内容
@@ -63,12 +62,12 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -99,7 +98,7 @@ public class Post implements Serializable {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -107,7 +106,7 @@ public class Post implements Serializable {
         return comment_time;
     }
 
-    public void setComment_time(Time comment_time) {
+    public void setComment_time(Date comment_time) {
         this.comment_time = comment_time;
     }
 

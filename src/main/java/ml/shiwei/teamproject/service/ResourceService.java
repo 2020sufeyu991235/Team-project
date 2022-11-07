@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface ResourceService {
     //根据用户ID查找相应的权限
-    List<Resource> list(Long id);
+    List<String> list(Long id);
 }

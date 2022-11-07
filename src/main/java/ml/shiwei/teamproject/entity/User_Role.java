@@ -1,5 +1,6 @@
 package ml.shiwei.teamproject.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,30 +17,31 @@ public class User_Role implements Serializable {
     private static final long serialVersionUID = -3046821418861762696L;
 
     @Id
-    private Long user_id;
-
-    private int role_id;
+    @Column(name="userId")
+    private Long userId;
+    @Column(name="roleId")
+    private int roleId;
 
     public User_Role(){}
 
-    public User_Role(Long user_id, int role_id) {
-        this.user_id = user_id;
-        this.role_id = role_id;
+    public User_Role(Long userId, int roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 }

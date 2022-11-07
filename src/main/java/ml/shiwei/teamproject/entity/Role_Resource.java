@@ -1,9 +1,6 @@
 package ml.shiwei.teamproject.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -12,37 +9,37 @@ import java.io.Serializable;
  * @description: 角色资源联系表
  */
 @Entity
+@IdClass(Role_ResourceId.class)
 @Table(name="role_resource")
 public class Role_Resource implements Serializable {
     private static final long serialVersionUID = -5961679666292459595L;
-
+    //复合主键
     @Id
-    @GeneratedValue
-    private int role_id;
-
-    private int resource_id;
+    private int roleId;
+    @Id
+    private int resourceId;
 
     public Role_Resource() {
     }
 
-    public Role_Resource(int role_id, int resource_id) {
-        this.role_id = role_id;
-        this.resource_id = resource_id;
+    public Role_Resource(int roleId, int resourceId) {
+        this.roleId = roleId;
+        this.resourceId = resourceId;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
-    public int getResource_id() {
-        return resource_id;
+    public int getResourceId() {
+        return resourceId;
     }
 
-    public void setResource_id(int resource_id) {
-        this.resource_id = resource_id;
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 }

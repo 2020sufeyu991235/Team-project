@@ -7,6 +7,7 @@ package ml.shiwei.teamproject.utils.identicon;
  */
 public enum ResultCode {
     SUCCESS(200,"请求成功"),
+    Forbidden(403,"没有权限"),
     USERNAME_EMPTY(10000,"用户名为空"),
     PASSWORD_ERROR(10001,"密码错误"),
     TOKEN_OUTDATED(10002,"Token失效"),
