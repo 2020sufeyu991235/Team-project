@@ -4,8 +4,6 @@ INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (0, 1);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (1, 1);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (2, 1);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (3, 1);
-INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (4, 1);
-INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (5, 1);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (0, 2);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (3, 2);
 INSERT INTO `role_resource`(`resourceId`, `roleId`) VALUES (4, 2);
