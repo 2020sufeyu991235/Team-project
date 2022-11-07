@@ -13,8 +13,8 @@
 
 		<header class="header">
 		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="#" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a href="http://localhost:8080/user/login/html"0 class="login" id="login">登录</a>
+		<a href="/" class="home"><ion-icon name="home"></ion-icon>主页</a>
+		<a href="http://localhost:8080/user/login/html" class="login" id="login">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
 				<option value="red" id="red">温暖色</option>
@@ -47,24 +47,23 @@
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
 <script>
-	var loginaq=document.getElementById("login");
-	loginaq.onclick=
-	function loginrequest(){
-		$.ajax({
-			url:'/user/login/html',
-			type:'get',
-			// async:false,
-                dataType:'html',
-                success:function(data){
-                	
-                    var newPage=window.open();
-                    newPage.document.write(data);
-                },
-                error:function(){
-                    console.log("fucking error")
-                }
-		});
-	}
+	// var loginaq=document.getElementById("login");
+	// loginaq.onclick=function loginrequest(){
+	// 	$.ajax({
+	// 		url:'/user/login/html',
+	// 		type:'get',
+	// 		// async:false,
+    //             dataType:'html',
+    //             success:function(data){
+    //
+    //                 var newPage=window.open();
+    //                 newPage.document.write(data);
+    //             },
+    //             error:function(){
+    //                 console.log("fucking error")
+    //             }
+	// 	});
+	// }
 	$(function(){
             var user=localStorage.getItem("user");
             var userObj=JSON.parse(user);
