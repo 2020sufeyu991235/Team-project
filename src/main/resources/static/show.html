@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>学校</title>
+	<link rel="stylesheet" href="show.css">
+</head>
+<body>
+	<header class="header">
+		<img src="/img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="#" class="home"><ion-icon name="home"></ion-icon>主页</a>
+		<a  href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>	
+		<div class="colors">风格
+			<select id="abc" onchange="changecolor(this.value)">
+				<option value="red">温暖色</option>
+				<option value="black">黑白配</option>
+				<option value="blue">清凉色</option>
+			</select>
+		</div>	
+	</header>
+
+	<div class="banner"></div>
+	<div class="body">
+		<div class="left"></div>
+		<div class="right"></div>
+	</div>
+	<div class="footer"></div>
+</body>
+</html>

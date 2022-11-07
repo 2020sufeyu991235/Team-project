@@ -57,8 +57,12 @@
                 //这里的data是指：服务器返回的json对象
                 success:function(data){
                     if(data.code===200){
+
                         localStorage.setItem("user",JSON.stringify(data.data));
+                        document.cookie="username="+username.value+"; domain=localhost; path=/; http=false; "
+
                     }
+                    location.href = 'http://localhost:8080/';
                 },
                 error:function(){
                     console.log("error");

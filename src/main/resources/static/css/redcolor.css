@@ -1,0 +1,29 @@
+body{
+		background-color: #faf4f3; 
+	}
+	.header{
+		background-color: #e18d8d;
+	}
+	.header a ,
+	.colors{
+		color: #fff;
+	}
+	.colors select{
+		background-color: #fff;
+		color: #e18d8d;
+	}
+	.zone div{
+		background-color: #e29181;
+	}
+	.zone div span{
+		color: #841025;
+	}
+	.zone div:hover{
+		background-color: #dc4949;
+	}
+	.zone div:hover span{
+		color: #f0c1d8;
+	}
+	hr{
+		background-color: #d94021;
+	}
