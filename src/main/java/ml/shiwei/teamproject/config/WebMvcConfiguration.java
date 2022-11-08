@@ -20,8 +20,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         //registry.addResourceHandler("访问的路径").addResourceLocations("资源的路径");
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
-        String filepath=System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\";
-        registry.addResourceHandler("/img/")
+        String filepath=System.getProperty("user.dir")+"\\src\\main\\resources\\static\\postimg\\";
+        registry.addResourceHandler("/postimg/")
                 .addResourceLocations(filepath.replace("\\","/"));
     }
 
