@@ -42,29 +42,30 @@
 		.header a{
 			color: #fff;
 			position: absolute;
-			height: 52px;
-			line-height: 52px;
+			top:27%;
+			font-size:120%;
 		}
 		.header a ion-icon{
 			vertical-align: -4%;
 		}
 		.home {
-			left: 250px;
+			left: 20%;
 		}
 		.header img{
-			height: 52px;
-			width: 100px;
-			padding-left: 100px;
+			height: 80%;
+			position: absolute;
+        	top: 10%;
+			padding-left: 4%;
 		}
 		.login{
-			right: 270px;
+			right:15%;
 		}
 		.colors{
-			height: 52px;
 			display: inline-block;
 			position: absolute;
-			right: 120px;
-			line-height: 52px;
+			font-size: 120%;
+			top: 27%;
+			right: 1%;
 			color: #fff;
 		}
 		.colors select{
@@ -84,7 +85,7 @@
 		.content{
 			background-color: #fff;
 			padding: 14px;
-			position: absolute;
+			position: fixed;
 			width: 60%;
 			left: 20%;
 			border-radius: 14px;

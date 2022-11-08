@@ -14,7 +14,7 @@
 		<header class="header">
 		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
 		<a href="/" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a href="http://localhost:8080/user/login/html" class="login" id="login">登录</a>
+		<a href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
 				<option value="red" id="red">温暖色</option>
@@ -47,6 +47,30 @@
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
 <script>
+
+	var username=null;
+	var nn="username="
+	var ccolor=null;
+	var cc="colorstyle=";
+	var co=document.cookie.split(";");
+	for(var i=0;i<co.length;i++){
+		var c=co[i].trim();
+		if (c.indexOf(nn)==0) {
+			username=c.substring(nn.length,c.length);
+			if (username!="") {
+				document.getElementById("login").href="/";
+				document.getElementById("login").innerHTML=username;
+			}
+		}
+		if (c.indexOf(cc)==0) {
+			ccolor=c.substring(cc.length,c.length);
+			if (ccolor!="") {
+				document.getElementById(ccolor).selected="selected";
+				document.getElementById("csscolor").href="/css/"+ccolor+"color.css";
+			}
+		}
+	}
+
 	// var loginaq=document.getElementById("login");
 	// loginaq.onclick=function loginrequest(){
 	// 	$.ajax({
@@ -64,30 +88,32 @@
     //             }
 	// 	});
 	// }
+
 	$(function(){
             var user=localStorage.getItem("user");
 			//localStorage中有user数据
-			if(user!=null){
-            	var userObj=JSON.parse(user);
-            	var token=userObj.string;
-            	if(token!=null){
-                	$.ajax({
-                    	url:"/user/login/token",
-                    	type:"get",
-                    	headers:{"token":token},
-                    	success:function(data){
-                        	console.log(data);
-							if(data.code!=200){
+			if(user!=null) {
+				var userObj = JSON.parse(user);
+				var token = userObj.string;
+				if (token != null) {
+					$.ajax({
+						url: "/user/login/token",
+						type: "get",
+						headers: {"token": token},
+						success: function (data) {
+							console.log(data);
+							if (data.code != 200) {
 								//Token失效，清空用户权限和Token信息
 								localStorage.removeItem("list");
 								localStorage.removeItem("user");
 							}
-                    	},
-                    	error:function(data){
-                        	console.log(error);
-                    	}
-                });
-            }
+						},
+						error: function (data) {
+							console.log(error);
+						}
+					});
+				}
+			}
         });
 
 
@@ -95,7 +121,8 @@
 	function changecolor(color_style){
 		ccolor.href="/css/"+color_style+"color.css";
 		document.cookie="colorstyle="+color_style+"; domain=localhost; path=/; http=false; "
-	} 
+	}
+
 </script>	
 </body>
 </html>
