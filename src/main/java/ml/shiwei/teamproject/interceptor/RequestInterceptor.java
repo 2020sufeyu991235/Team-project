@@ -43,7 +43,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         //读取url
         String url= String.valueOf(request.getRequestURI());
         //为方便开发，暂保留拦截器输出内容
-        System.out.println("请求url："+url);
+        System.out.println("Request url:"+url);
         //用户id，默认为-1，表示未登录
         long userId=-1L;
 
@@ -58,7 +58,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         }
         //读取用户权限
         List<String> resourceList=resourceService.list(userId);
-        System.out.println("请求用户所有权限：");
+        System.out.println("Can be accessed:");
         resourceList.forEach(System.out::println);
         System.out.println("---------------------------");
         if(resourceList.contains(url)){

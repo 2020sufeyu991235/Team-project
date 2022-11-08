@@ -66,19 +66,26 @@
 	// }
 	$(function(){
             var user=localStorage.getItem("user");
-            var userObj=JSON.parse(user);
-            var token=userObj.string;
-            if(token!=null){
-                $.ajax({
-                    url:"/user/login/token",
-                    type:"get",
-                    headers:{"token":token},
-                    success:function(data){
-                        console.log(data);
-                    },
-                    error:function(data){
-                        console.log(error);
-                    }
+			//localStorage中有user数据
+			if(user!=null){
+            	var userObj=JSON.parse(user);
+            	var token=userObj.string;
+            	if(token!=null){
+                	$.ajax({
+                    	url:"/user/login/token",
+                    	type:"get",
+                    	headers:{"token":token},
+                    	success:function(data){
+                        	console.log(data);
+							if(data.code!=200){
+								//Token失效，清空用户权限和Token信息
+								localStorage.removeItem("list");
+								localStorage.removeItem("user");
+							}
+                    	},
+                    	error:function(data){
+                        	console.log(error);
+                    	}
                 });
             }
         });
