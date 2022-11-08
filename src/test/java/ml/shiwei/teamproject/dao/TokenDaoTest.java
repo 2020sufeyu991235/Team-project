@@ -21,8 +21,8 @@ class TokenDaoTest {
     @Test
     void deleteOverdueToken() {
         Date date=new Date(System.currentTimeMillis());
-        //tokenDao.save(new Token(date,"1234"));
-        tokenDao.deleteOverdueToken(date);
+        tokenDao.save(new Token(date,"1234"));
+        //tokenDao.deleteOverdueToken(date);
         //System.out.println(date);
     }
     @Test

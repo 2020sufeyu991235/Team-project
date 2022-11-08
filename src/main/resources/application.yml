@@ -12,6 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    open-in-view: false
     #在建表的时候，将默认的存储引擎切换为 InnoDB
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:

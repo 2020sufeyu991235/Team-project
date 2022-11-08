@@ -70,7 +70,7 @@ public class Post implements Serializable {
         this.userId = userId;
     }
 
-    public String getTitle() {
+    public String getTitle(String title) {
         return title;
     }
 
@@ -100,6 +100,10 @@ public class Post implements Serializable {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Date getComment_time() {
@@ -144,6 +148,28 @@ public class Post implements Serializable {
 
     public int getStep() {
         return step;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", path='" + path + '\'' +
+                ", time=" + time +
+                ", comment_time=" + comment_time +
+                ", views=" + views +
+                ", comments=" + comments +
+                ", heat=" + heat +
+                ", likes=" + likes +
+                ", step=" + step +
+                ", food='" + food + '\'' +
+                ", price=" + price +
+                ", shop='" + shop + '\'' +
+                ", canteen='" + canteen + '\'' +
+                '}';
     }
 
     public void setStep(int step) {
