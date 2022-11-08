@@ -12,5 +12,6 @@ import org.springframework.stereotype.Repository;
  * 参考：https://blog.csdn.net/hbtj_1216/article/details/79773839
  */
 public interface UserDao extends JpaRepository<User,Long> {
+    //根据用户名查找用户User
     User findByUserName(String UserName);
 }

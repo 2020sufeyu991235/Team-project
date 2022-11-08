@@ -6,13 +6,11 @@
 <body>
 <div id="app">
     <!--发帖按钮-->
-    <el-row>
-        <el-button type="primary" plain @click="dialogVisible = true">发帖</el-button>
-    </el-row>
+        <el-button type="primary" plain @click="publishButton()">发帖</el-button>
     <!--点击弹出对话框发帖表单-->
     <el-dialog
             title="编辑"
-            :visible.sync="dialogVisible"
+            :visible.sync="publishPostDialogVisible"
             width="100%"
             >
 
@@ -50,6 +48,7 @@
                         ref="upload"
                         action=""
                         list-type="picture-card"
+                        accept=".jpg,.png"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
                         :on-change="UploadImage"
@@ -64,7 +63,7 @@
                         </div>
                     </template>
                 </el-upload>
-                <el-dialog :visible.sync="dialogVisible1 " :visible.sync="innerVisible"
+                <el-dialog :visible.sync="imgDialogVisible " :visible.sync="innerVisible"
                            append-to-body>
                     <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
@@ -93,28 +92,58 @@
         el:"#app",
 
         methods: {
+            //发帖按钮的方法
+            publishButton(){
+                var list=localStorage.getItem("list");
+                if(list==null){
+                    alert("你没有权限!");
+                    return;
+                }
+
+                var listObj=JSON.parse(list);
+                if(!listObj.includes("/posting")){
+                    alert("你没有权限！");
+                    return;
+                }
+
+                this.publishPostDialogVisible = true;
+            },
             //上传图片的方法
-            UploadImage(file,filelist) {
+            UploadImage(file) {
                 //console.log(file);
-                let fd = new FormData()
-                fd.append('file', file.raw) //传给后台接收的名字 file
-                axios.post('/posting/upload', fd, {headers: {'Content-Type': 'multipart/form-data'}}).then(response => {
-                    //上传成功后返回的数据,
-                    console.log("上传图片到:"+response.data);
-                    // 将图片地址给到表单.
-                    this.post.path=response.data
-                })
+                //判断图片满足条件
+                let suffix = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                const isJPG = suffix === 'jpg';
+                const isPNG = suffix === 'png';
+                const isLt5M = file.size / 1024 / 1024 <= 5;
+                if((isJPG||isPNG) && isLt5M)
+                {
+                    var user=localStorage.getItem("user");
+                    var userObj=JSON.parse(user);
+                    var token=userObj.string;
+                    let fd = new FormData()
+                    fd.append('file', file.raw) //传给后台接收的名字 file
+                    axios.post('/posting/upload', fd, {headers: {'Content-Type': 'multipart/form-data','token':token}}).then(response => {
+                        //上传成功后返回的数据,
+                        console.log("上传图片到:" + response.data);
+                        // 将图片地址给到表单.
+                        this.post.path = response.data
+                    })
+                }else {
+                    this.$refs.upload.clearFiles();
+                    this.$message.error('只能上传大小不超过 5MB 的图片!');
+                }
 
             },
             //移除图片功能
             handleRemove(file, fileList) {
                 console.log(file, fileList)
-
+                this.post.path='';
             },
             //预览图片功能
             handlePictureCardPreview(file) {
                 console.log(file.url);
-                this.dialogVisible1 = true
+                this.imgDialogVisible = true
                 this.dialogImageUrl = file.url
 
             },
@@ -127,7 +156,6 @@
                             method: "post",
                             url: "http://localhost:8080/posting",
                             data: _this.post
-
                         });
                         alert('发布成功!');
                         location.replace(location.href);
@@ -142,8 +170,8 @@
         data(){
             return{
                 //发帖表单是否展示的标记
-                dialogVisible: false,
-                dialogVisible1: false,
+                publishPostDialogVisible: false,
+                imgDialogVisible: false,
                 dialogImageUrl: '',
                 //表单数据
                 post: {

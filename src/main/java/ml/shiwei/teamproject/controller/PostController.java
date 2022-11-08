@@ -1,28 +1,26 @@
 package ml.shiwei.teamproject.controller;
 
-import ml.shiwei.teamproject.dao.PostDao;
+import io.jsonwebtoken.Claims;
 import ml.shiwei.teamproject.entity.Post;
+import ml.shiwei.teamproject.service.PostService;
 import ml.shiwei.teamproject.utils.posting.UploadUtils;
+import ml.shiwei.teamproject.utils.token.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @RestController
-public class PostingController {
+public class PostController {
 
-    @Resource
-    private PostDao postDao;
+    @Autowired
+    private PostService postService;
 
     @RequestMapping("/posting")
     //发新帖
-    public void posting(@RequestBody Post post){
+    public void posting(@RequestBody Post post,@RequestHeader("token") String string){
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
         post.setTime(java.sql.Date.valueOf(dateFormat.format(date)));
@@ -32,8 +30,10 @@ public class PostingController {
         post.setHeat(0);
         post.setLikes(0);
         post.setStep(0);
-        post.setUser_id(123L);
-        postDao.save(post);
+        Claims claims= JwtUtils.checkToken(string);
+        long id= (int) claims.get("id");
+        post.setUserId(id);
+        postService.publish(post);
     //    System.out.println(post.toString());
     }
 

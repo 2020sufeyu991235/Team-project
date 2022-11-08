@@ -34,7 +34,7 @@ public class UserController {
      */
     @RequestMapping("/login/html")
     public String loginHtml(){
-        return "login.html";
+        return "login";
     }
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
@@ -61,7 +61,7 @@ public class UserController {
 
     @RequestMapping(value = "/login/token")
     @ResponseBody
-    public Result loginWithToken(@RequestHeader("Token") String string){
+    public Result loginWithToken(@RequestHeader("token") String string){
         if(string!=null){
             if(tokenService.findAndDelete(string)){
                 return new Result(ResultCode.SUCCESS);

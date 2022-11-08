@@ -31,8 +31,11 @@ public class TokenServiceImpl implements TokenService {
     @Override
     //查找并删除超时Token
     public boolean findAndDelete(String string) {
-        Date date=new Date(System.currentTimeMillis());
-        tokenDao.deleteOverdueToken(date);
-        return tokenDao.existsByString(string);
+        if(tokenDao.count()!=0) {
+            Date date = new Date(System.currentTimeMillis());
+            tokenDao.deleteOverdueToken(date);
+            return tokenDao.existsByString(string);
+        }
+        else return false;
     }
 }

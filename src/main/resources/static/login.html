@@ -11,7 +11,7 @@
             margin:100px auto;
         }
         span.help-block{
-            color:red!important;
+            color: #ff0000 !important;
             display:none;
         }
     </style>
@@ -57,7 +57,25 @@
                 //这里的data是指：服务器返回的json对象
                 success:function(data){
                     if(data.code===200){
+                        //将Token存储到本地
                         localStorage.setItem("user",JSON.stringify(data.data));
+                        //读取用户Token
+                        var user=data.data;
+                        var token=user.string;
+                        //请求用户权限
+                        $.ajax({
+                            url:"/resource/list",
+                            type:'get',
+                            headers:{"token":token},
+                            success:function(data){
+                                //将权限列表存储进本地
+                                localStorage.setItem("list",JSON.stringify(data));
+                                console.log(data);
+                            },
+                            error:function(){
+                                console.log("error");
+                            }
+                        });
                     }
                 },
                 error:function(){
@@ -65,24 +83,7 @@
                 }
             });
         }
-        $(function(){
-            var user=localStorage.getItem("user");
-            var userObj=JSON.parse(user);
-            var token=userObj.string;
-            if(token!=null){
-                $.ajax({
-                    url:"/user/login/token",
-                    type:"get",
-                    headers:{"token":token},
-                    success:function(data){
-                        console.log(data);
-                    },
-                    error:function(data){
-                        console.log(error);
-                    }
-                });
-            }
-        });
+
     </script>
 </body>
 </html>

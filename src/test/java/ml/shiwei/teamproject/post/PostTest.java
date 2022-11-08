@@ -42,7 +42,7 @@ class PostTest {
         post.setHeat(0);
         post.setLikes(0);
         post.setStep(0);
-        post.setUser_id(123L);
+        post.setUserId(123L);
         post.setPath("//");
         //插入数据
         //postDao.findAll()
