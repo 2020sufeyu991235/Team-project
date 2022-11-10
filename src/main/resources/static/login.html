@@ -20,16 +20,16 @@
     <div class="wrap">
         <form>
             <div class="form-group">
-                <label for="userName">UserName</label>
+                <label for="userName">用户名</label>
                 <!--输入用户名-->
                 <input type="text" class="form-control" id="userName" placeholder="please enter your name" spellcheck="false">
             </div>
             <div class="form-group">
-                <label for="passWord">PassWord</label>
+                <label for="passWord">密码</label>
                 <!--输入密码-->
                 <input type="password" class="form-control" id="passWord" placeholder="please enter your password">
             </div>
-            <button type="button" class="btn btn-default" id="login">Login In</button>
+            <button type="button" class="btn btn-default" id="login">登录</button>
         </form>
     </div>
     <script type="text/javascript" src="/js/jquery-3.6.1.min.js"></script>
@@ -57,11 +57,13 @@
                 //这里的data是指：服务器返回的json对象
                 success:function(data){
                     if(data.code===200){
-                        //将Token存储到本地
+                        //将用户信息存储到本地
                         localStorage.setItem("user",JSON.stringify(data.data));
-                        //读取用户Token
+                        //读取用户信息
                         var user=data.data;
                         var token=user.string;
+                        var name=user.name;
+                        console.log(name);
                         //请求用户权限
                         $.ajax({
                             url:"/resource/list",

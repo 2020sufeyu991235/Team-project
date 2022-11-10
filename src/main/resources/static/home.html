@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<div id="app">
+    <!--发帖按钮-->
+        <el-button type="primary" plain @click="publishButton()">发帖</el-button>
+    <!--点击弹出对话框发帖表单-->
+    <el-dialog
+            title="编辑"
+            :visible.sync="publishPostDialogVisible"
+            width="100%"
+            >
+
+        <el-form :model="post" :rules="rules" ref="post" label-width="100px" class="demo-post">
+            <el-form-item label="标题" prop="title">
+                <el-input v-model="post.title"></el-input>
+            </el-form-item>
+            <el-form-item label="菜名" prop="food">
+                <el-input v-model="post.food"></el-input>
+            </el-form-item>
+            <el-form-item label="所在饭堂" prop="canteen">
+                <el-select v-model="post.canteen" placeholder="请选择菜品所在位置">
+                    <el-option label="一饭一楼" value="yifan1"></el-option>
+                    <el-option label="一饭二楼" value="yifan2"></el-option>
+                    <el-option label="二饭一楼" value="erfan1"></el-option>
+                    <el-option label="二饭二楼" value="erfan2"></el-option>
+                    <el-option label="三饭一楼" value="sanfan1"></el-option>
+                    <el-option label="三饭二楼" value="sanfan2"></el-option>
+                    <el-option label="四饭一楼" value="sifan1"></el-option>
+                    <el-option label="四饭二楼" value="sifan2"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="具体店铺" prop="shop">
+                <el-input v-model="post.shop"></el-input>
+            </el-form-item>
+            <el-form-item label="价格" prop="price">
+                <el-input-number v-model="post.price" :precision="1" :step="0.1" ></el-input-number>
+            </el-form-item>
+
+            <el-form-item label="描述" prop="content">
+                <el-input type="textarea" :rows="20" v-model="post.content"></el-input>
+            </el-form-item>
+            <el-form-item label="菜品图片"  >
+                <el-upload
+                        ref="upload"
+                        action=""
+                        list-type="picture-card"
+                        accept=".jpg,.png"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove"
+                        :on-change="UploadImage"
+                        :limit="1"
+                        :file-list="fileList"
+                        :auto-upload="false"
+                >
+                    <i class="el-icon-plus"></i>
+                    <template #tip>
+                        <div style="font-size: 12px;color: #919191;">
+                            单次限制上传一张图片
+                        </div>
+                    </template>
+                </el-upload>
+                <el-dialog :visible.sync="imgDialogVisible " :visible.sync="innerVisible"
+                           append-to-body>
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="publish('post')">发布</el-button>
+            </el-form-item>
+
+        </el-form>
+
+
+
+
+
+    </el-dialog>
+
+
+</div>
+<script src="js/vue.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script>
+    new Vue({
+        el:"#app",
+
+        methods: {
+            //发帖按钮的方法
+            publishButton(){
+                var list=localStorage.getItem("list");
+                if(list==null){
+                    alert("你没有权限!");
+                    return;
+                }
+
+                var listObj=JSON.parse(list);
+                if(!listObj.includes("/posting")){
+                    alert("你没有权限！");
+                    return;
+                }
+
+                this.publishPostDialogVisible = true;
+            },
+            //上传图片的方法
+            UploadImage(file) {
+                //console.log(file);
+                //判断图片满足条件
+                let suffix = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+                const isJPG = suffix === 'jpg';
+                const isPNG = suffix === 'png';
+                const isLt5M = file.size / 1024 / 1024 <= 5;
+                if((isJPG||isPNG) && isLt5M)
+                {
+                    var user=localStorage.getItem("user");
+                    var userObj=JSON.parse(user);
+                    var token=userObj.string;
+                    let fd = new FormData()
+                    fd.append('file', file.raw) //传给后台接收的名字 file
+                    axios.post('/posting/upload', fd, {headers: {'Content-Type': 'multipart/form-data','token':token}}).then(response => {
+                        //统一返回格式
+                        var data=response.data;
+                        if(data.code===200){
+                            //上传成功后返回的数据,
+                            console.log("上传图片到:" + data.data);
+                            // 将图片地址给到表单.
+                            this.post.path = data.data
+                        }
+                        else {
+                            console.log(data)
+                        }
+                    }).catch(error =>{
+                        //error.response：默认异常返回，本来想弄统一返回格式，但怕出错还是用默认的异常返回格式
+                        //状态码
+                        var status=error.response.status;
+                        if(status===403){
+                            alert("没有权限，上传图片失败。")
+                        }
+                        else{
+                            alert("上传图片失败")
+                        }
+                    })
+                }else {
+                    this.$refs.upload.clearFiles();
+                    this.$message.error('只能上传大小不超过 5MB 的图片!');
+                }
+
+            },
+            //移除图片功能
+            handleRemove(file, fileList) {
+                console.log(file, fileList)
+                this.post.path='';
+            },
+            //预览图片功能
+            handlePictureCardPreview(file) {
+                console.log(file.url);
+                this.imgDialogVisible = true
+                this.dialogImageUrl = file.url
+
+            },
+            publish(formName) {
+                console.log(this.post);
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        var user=localStorage.getItem("user");
+                        var userObj=JSON.parse(user);
+                        var token=userObj.string;
+                        var _this = this;
+                        axios({
+                            method: "post",
+                            url: "/posting",
+                            headers:{token:token},
+                            data: _this.post
+                        });
+                        alert('发布成功!');
+                        location.replace(location.href);
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }
+        },
+
+        data(){
+            return{
+                //发帖表单是否展示的标记
+                publishPostDialogVisible: false,
+                imgDialogVisible: false,
+                dialogImageUrl: '',
+                //表单数据
+                post: {
+                    title: '',
+                    food: '',
+                    canteen: '',
+                    content: '',
+                    shop: '',
+                    price: '',
+                    path: ''
+                },
+                rules: {
+                    title: [
+                        { required: true, message: '请填写标题', trigger: 'blur' }
+                    ],
+                    food: [
+                        { required: true, message: '请填写菜品名字', trigger: 'blur' }
+                    ],
+                    canteen: [
+                        { required: true, message: '请选择菜品所在饭堂', trigger: 'change' }
+                    ],
+                    shop: [
+                        { required: true, message: '请填写具体店铺位置', trigger: 'blur' }
+                    ],
+                    content: [
+                        { required: true, message: '请填写描述', trigger: 'blur' },
+                        {max: 200, message: '最多200个字', trigger: 'blur' }
+                    ]
+                }
+            };
+            }
+    })
+
+
+</script>
+</body>

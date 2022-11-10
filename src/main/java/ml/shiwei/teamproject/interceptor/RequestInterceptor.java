@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -64,16 +66,22 @@ public class RequestInterceptor implements HandlerInterceptor {
         if(resourceList.contains(url)){
             return true;
         }
-        //返回访问失败信息，后续替换成图片返回
+        //返回访问失败页面
         System.out.println("error");
-        response.reset();
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json;charset=utf-8");
-        PrintWriter printWriter=response.getWriter();
-        ObjectMapper objectMapper=new ObjectMapper();
-        printWriter.write(objectMapper.writeValueAsString(new Result(ResultCode.Forbidden)));
-        printWriter.flush();
-        printWriter.close();
+        /*try {
+            response.reset();
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=utf-8");
+            PrintWriter printWriter = response.getWriter();
+            ObjectMapper objectMapper = new ObjectMapper();
+            printWriter.write(objectMapper.writeValueAsString(new Result(ResultCode.Forbidden)));
+            printWriter.flush();
+            printWriter.close();
+        }catch (Exception e){
+            System.out.println("Response error");
+            e.printStackTrace();
+        }*/
+        response.sendError(403,"没有权限访问");
         return false;
     }
 

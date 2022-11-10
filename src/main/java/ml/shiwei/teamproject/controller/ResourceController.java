@@ -1,7 +1,7 @@
 package ml.shiwei.teamproject.controller;
 
 import io.jsonwebtoken.Claims;
-import ml.shiwei.teamproject.service.impl.ResourceServiceImpl;
+import ml.shiwei.teamproject.service.ResourceService;
 import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +21,13 @@ import java.util.List;
 @RequestMapping("/resource")
 public class ResourceController {
     @Autowired
-    ResourceServiceImpl resourceServiceImpl;
+    ResourceService resourceService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
     public List<String> getList(@RequestHeader("Token") String string){
         Claims claims= JwtUtils.checkToken(string);
         long userId= (int) claims.get("id");
-        return resourceServiceImpl.list(userId);
+        return resourceService.list(userId);
     }
 }
