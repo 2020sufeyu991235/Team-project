@@ -1,0 +1,39 @@
+body{
+		background-color: #f4fcff; 
+	}
+	.header{
+		background-color: #1bbcff;
+	}
+	.header a ,
+	.colors{
+		color: #263db1;
+	}
+	.colors select{
+		background-color: #f4fcff;
+		color: #14385e;
+	}
+	.zone div{
+		background-color: #77bed0;
+	}
+	.zone div span{
+		color: #244148;
+	}
+	.zone div:hover{
+		background-color: #3086fa;
+	}
+	.zone div:hover span{
+		color: #c0d9fb;
+	}
+	hr{
+		background-color: #003c8d;
+	}
+		/*	document.body.style.setProperty('--bodycolor','#f0f0f0');      1主体颜色*/
+		/*	document.body.style.setProperty('--headercolor','#d0d0d0');	   2头部颜色*/
+		/*	// document.body.style.setProperty('--headacolor','#474747');     3头部文字颜色*/
+		/*	// document.body.style.setProperty('--bcolors','#e0e0e0');       4下拉背景颜色*/
+		/*	// document.body.style.setProperty('--colors','#474747');        5下拉文字颜色
+		/*	// document.body.style.setProperty('--bzone','#d8d8d8');        6选项背景颜色*/
+		/*	// document.body.style.setProperty('--dzone','#474747');       /*7选项文字颜色*/
+		/*	// document.body.style.setProperty('--hbzone','#5d5d5d');       /*8指向时选项背景颜色*/
+		/*	// document.body.style.setProperty('--hdzone','#fff');        /*9指向时选项文字颜色*/
+		/*	// document.body.style.setProperty('--hrcolor','#585858');       /*10hr颜色*/

@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="userName">用户名</label>
                 <!--输入用户名-->
-                <input type="text" class="form-control" id="userName" placeholder="please enter your name">
+                <input type="text" class="form-control" id="userName" placeholder="please enter your name" spellcheck="false">
             </div>
             <div class="form-group">
                 <label for="passWord">密码</label>
@@ -78,7 +78,10 @@
                                 console.log("error");
                             }
                         });
+                        document.cookie="username="+username.value+"; domain=localhost; path=/; http=false; "
+
                     }
+                    location.href = 'http://localhost:8080/';
                 },
                 error:function(){
                     console.log("error");

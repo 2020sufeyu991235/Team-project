@@ -4,64 +4,22 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>食味</title>
-	<link rel="stylesheet" type="text/css" href="./css/HomePage.css">
+	<link rel="stylesheet" type="text/css" href="/css/HomePage.css">
+	<link rel="stylesheet" type="text/css" href="/css/redcolor.css" id="csscolor">
 	<base target="_blank" />
 </head>
-<style>
-	body{
-		--bodycolor: #faf4f3;
-		--headercolor: #e18d8d;
-		--headacolor: #fff;
-		--bcolors: #fff;
-		--colors: #e18d8d;
-		--bzone: #e29181;
-		--dzone: #841025;
-		--hbzone: #dc4949;
-		--hdzone: #f0c1d8;
-		--hrcolor: #d94021;
-	}
-	body{
-		background-color: var(--bodycolor); 
-	}
-	.header{
-		background-color: var(--headercolor);
-	}
-	.header a ,
-	.colors{
-		color: var(--headacolor);
-	}
-	.colors select{
-		background-color: var(--bcolors);
-		color: var(--colors);
-	}
-	.zone div{
-		background-color: var(--bzone);
-	}
-	.zone div span{
-		color: var(--dzone);
-	}
-	.zone div:hover{
-		background-color: var(--hbzone);
-	}
-	.zone div:hover span{
-		color: var(--hdzone);
-	}
-	hr{
-		background-color: var(--hrcolor);
-	}
-	
-</style>
+
 <body>
 
-	<header class="header">
-		<img src="./img/logo_c3.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="/" target="_self" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a  class="login" id="login">登录</a>	
+		<header class="header">
+		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="/" class="home"><ion-icon name="home"></ion-icon>主页</a>
+		<a href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
-				<option value="red">温暖色</option>
-				<option value="black">黑白配</option>
-				<option value="blue">清凉色</option>
+				<option value="red" id="red">温暖色</option>
+				<option value="black" id="black">黑白配</option>
+				<option value="blue" id="blue">清凉色</option>
 			</select>
 		</div>	
 	</header>
@@ -86,96 +44,85 @@
 			</div>
 		</div>
 	</div>
-	<div id="openwi"></div>
-<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js">
-</script>
-<script type="text/javascript" src="./js/jquery-3.6.1.min.js">
-</script>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+<script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
 <script>
-	var loginaq=document.getElementById("login");
-	loginaq.onclick=
-	function loginrequest(){
-		window.location.href='/user/login/html';
-		/*$.ajax({
-			url:'/user/login/html',
-			type:'get',
-			// async:false,
-                dataType:'html',
-                success:function(data){
-                	
-                    var newPage=window.open();
-                    newPage.document.write(data);
-                },
-                error:function(){
-                    console.log("fucking error")
-                }
-		});*/
+
+	var username=null;
+	var nn="username="
+	var ccolor=null;
+	var cc="colorstyle=";
+	var co=document.cookie.split(";");
+	for(var i=0;i<co.length;i++){
+		var c=co[i].trim();
+		if (c.indexOf(nn)==0) {
+			username=c.substring(nn.length,c.length);
+			if (username!="") {
+				document.getElementById("login").href="/";
+				document.getElementById("login").innerHTML=username;
+			}
+		}
+		if (c.indexOf(cc)==0) {
+			ccolor=c.substring(cc.length,c.length);
+			if (ccolor!="") {
+				document.getElementById(ccolor).selected="selected";
+				document.getElementById("csscolor").href="/css/"+ccolor+"color.css";
+			}
+		}
 	}
+
+	// var loginaq=document.getElementById("login");
+	// loginaq.onclick=function loginrequest(){
+	// 	$.ajax({
+	// 		url:'/user/login/html',
+	// 		type:'get',
+	// 		// async:false,
+    //             dataType:'html',
+    //             success:function(data){
+    //
+    //                 var newPage=window.open();
+    //                 newPage.document.write(data);
+    //             },
+    //             error:function(){
+    //                 console.log("fucking error")
+    //             }
+	// 	});
+	// }
+
 	$(function(){
             var user=localStorage.getItem("user");
 			//localStorage中有user数据
-			if(user!=null){
-            	var userObj=JSON.parse(user);
-            	var token=userObj.string;
-            	if(token!=null){
-                	$.ajax({
-                    	url:"/user/login/token",
-                    	type:"get",
-                    	headers:{"token":token},
-                    	success:function(data){
-                        	console.log(data);
-							if(data.code!=200){
+			if(user!=null) {
+				var userObj = JSON.parse(user);
+				var token = userObj.string;
+				if (token != null) {
+					$.ajax({
+						url: "/user/login/token",
+						type: "get",
+						headers: {"token": token},
+						success: function (data) {
+							console.log(data);
+							if (data.code != 200) {
 								//Token失效，清空用户权限和Token信息
 								localStorage.removeItem("list");
 								localStorage.removeItem("user");
 							}
-                    	},
-                    	error:function(data){
-                        	console.log(error);
-                    	}
-                });
-            }
-		}
+						},
+						error: function (data) {
+							console.log(error);
+						}
+					});
+				}
+			}
         });
 
+
+	var ccolor=document.getElementById("csscolor");
 	function changecolor(color_style){
-		if(color_style == 'black'){
-			document.body.style.setProperty('--bodycolor','#f0f0f0');      /*1主体颜色*/
-			document.body.style.setProperty('--headercolor','#d0d0d0');	   /*2头部颜色*/
-			document.body.style.setProperty('--headacolor','#474747');     /*3头部文字颜色*/
-			document.body.style.setProperty('--bcolors','#e0e0e0');       /*4下拉背景颜色*/
-			document.body.style.setProperty('--colors','#474747');        /*5下拉文字颜色*/
-			document.body.style.setProperty('--bzone','#d8d8d8');        /*6选项背景颜色*/
-			document.body.style.setProperty('--dzone','#474747');       /*7选项文字颜色*/
-			document.body.style.setProperty('--hbzone','#5d5d5d');       /*8指向时选项背景颜色*/
-			document.body.style.setProperty('--hdzone','#fff');        /*9指向时选项文字颜色*/
-			document.body.style.setProperty('--hrcolor','#585858');       /*10hr颜色*/
-		}
-		else if(color_style == 'blue'){
-			document.body.style.setProperty('--bodycolor','#f4fcff');
-			document.body.style.setProperty('--headercolor','#1bbcff');
-			document.body.style.setProperty('--headacolor','#263db1');
-			document.body.style.setProperty('--bcolors','#f4fcff');
-			document.body.style.setProperty('--colors','#14385e');
-			document.body.style.setProperty('--bzone','#77bed0');
-			document.body.style.setProperty('--dzone','#244148');
-			document.body.style.setProperty('--hbzone','#3086fa');
-			document.body.style.setProperty('--hdzone','#c0d9fb');
-			document.body.style.setProperty('--hrcolor','#003c8d');
-		}
-		else{
-			document.body.style.setProperty('--bodycolor','#faf4f3');
-			document.body.style.setProperty('--headercolor','#e18d8d');
-			document.body.style.setProperty('--headacolor','#fff');
-			document.body.style.setProperty('--bcolors','#fff');
-			document.body.style.setProperty('--colors','#d58080');
-			document.body.style.setProperty('--bzone','#e29181');
-			document.body.style.setProperty('--dzone','#841025');
-			document.body.style.setProperty('--hbzone','#dc4949');
-			document.body.style.setProperty('--hdzone','#f0c1d8');
-			document.body.style.setProperty('--hrcolor','#d94021');
-		}
-	} 
+		ccolor.href="/css/"+color_style+"color.css";
+		document.cookie="colorstyle="+color_style+"; domain=localhost; path=/; http=false; "
+	}
+
 </script>	
 </body>
 </html>
