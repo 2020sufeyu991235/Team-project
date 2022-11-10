@@ -36,7 +36,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getRequestInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/resource/list");
+                .excludePathPatterns("/resource/list")
+                .excludePathPatterns("/error/**");
     }
 }
 

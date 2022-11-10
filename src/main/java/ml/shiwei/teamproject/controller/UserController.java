@@ -1,18 +1,17 @@
 package ml.shiwei.teamproject.controller;
 
-import io.jsonwebtoken.Claims;
-import ml.shiwei.teamproject.dao.UserDao;
 import ml.shiwei.teamproject.entity.Token;
 import ml.shiwei.teamproject.entity.User;
 import ml.shiwei.teamproject.service.TokenService;
 import ml.shiwei.teamproject.service.UserService;
 import ml.shiwei.teamproject.utils.identicon.Result;
 import ml.shiwei.teamproject.utils.identicon.ResultCode;
-import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -47,31 +46,34 @@ public class UserController {
                 //生成并将Token写入数据库
                 Token token=tokenService.generateAndWrite(user_dao);
                 //返回给前端的统一数据格式类Result，带有token
-                return new Result(ResultCode.SUCCESS,token);
+                Map<String,String> map=new HashMap<>();
+                map.put("string",token.getString());
+                map.put("name",user.getUserName());
+                return new Result(ResultCode.Success,map);
             }
             else {
-                return new Result(ResultCode.PASSWORD_ERROR);
+                return new Result(ResultCode.Password_Error);
             }
         }
         //用户名为空
         else{
-            return new Result(ResultCode.USERNAME_EMPTY);
+            return new Result(ResultCode.UserName_Empty);
         }
     }
 
     @RequestMapping(value = "/login/token")
     @ResponseBody
-    public Result loginWithToken(@RequestHeader("token") String string){
+    public Result loginWithToken(@RequestHeader(value = "token",required = false) String string){
         if(string!=null){
             if(tokenService.findAndDelete(string)){
-                return new Result(ResultCode.SUCCESS);
+                return new Result(ResultCode.Success);
             }
             else {
-                return new Result(ResultCode.TOKEN_OUTDATED);
+                return new Result(ResultCode.Token_Outdated);
             }
         }
         else{
-            return new Result(ResultCode.TOKEN_EMPTY);
+            return new Result(ResultCode.Token_Empty);
         }
     }
 }

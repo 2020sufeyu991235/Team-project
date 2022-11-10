@@ -3,14 +3,13 @@ package ml.shiwei.teamproject.controller;
 import io.jsonwebtoken.Claims;
 import ml.shiwei.teamproject.entity.Post;
 import ml.shiwei.teamproject.service.PostService;
+import ml.shiwei.teamproject.utils.identicon.Result;
+import ml.shiwei.teamproject.utils.identicon.ResultCode;
 import ml.shiwei.teamproject.utils.posting.UploadUtils;
 import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @RestController
 public class PostController {
@@ -18,30 +17,22 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    //接收前端返回Post实例，初始化其余参数并存储进数据库
     @RequestMapping("/posting")
-    //发新帖
     public void posting(@RequestBody Post post,@RequestHeader("token") String string){
-        Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
-        post.setTime(java.sql.Date.valueOf(dateFormat.format(date)));
-        post.setComment_time(java.sql.Date.valueOf(dateFormat.format(date)));
-        post.setViews(0);
-        post.setComments(0);
-        post.setHeat(0);
-        post.setLikes(0);
-        post.setStep(0);
+        //解析Token获取用户id
         Claims claims= JwtUtils.checkToken(string);
-        long id= (int) claims.get("id");
-        post.setUserId(id);
-        postService.publish(post);
-    //    System.out.println(post.toString());
+        long userId= (int) claims.get("id");
+        //初始化Post并存储
+        postService.publish(post,userId);
     }
 
+    //接收上传的图片并存储
     @PostMapping("/posting/upload")
-    public String uploadImage(@RequestParam(value = "file") MultipartFile multipartFile){
+    public Result uploadImage(@RequestParam(value = "file") MultipartFile multipartFile){
         if (multipartFile.isEmpty()){
-            return "文件有误！";
+            return new Result(ResultCode.File_Empty);
         }
-        return UploadUtils.uploadImage(multipartFile);
+        return new Result(ResultCode.Success,UploadUtils.uploadImage(multipartFile));
     }
 }
