@@ -1,7 +1,5 @@
 package ml.shiwei.teamproject.service;
 
-import ml.shiwei.teamproject.entity.Resource;
-
 import java.util.List;
 
 /**

@@ -94,7 +94,7 @@
         methods: {
             //发帖按钮的方法
             publishButton(){
-                var list=localStorage.getItem("list");
+                /*var list=localStorage.getItem("list");
                 if(list==null){
                     alert("你没有权限!");
                     return;
@@ -104,7 +104,7 @@
                 if(!listObj.includes("/posting")){
                     alert("你没有权限！");
                     return;
-                }
+                }*/
 
                 this.publishPostDialogVisible = true;
             },
@@ -173,6 +173,7 @@
                 publishPostDialogVisible: false,
                 imgDialogVisible: false,
                 dialogImageUrl: '',
+                fileList: [],
                 //表单数据
                 post: {
                     title: '',

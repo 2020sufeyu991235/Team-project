@@ -1,9 +1,7 @@
 package ml.shiwei.teamproject.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.jsonwebtoken.Claims;
-import ml.shiwei.teamproject.entity.Resource;
 import ml.shiwei.teamproject.service.ResourceService;
 import ml.shiwei.teamproject.service.TokenService;
 import ml.shiwei.teamproject.utils.identicon.Result;

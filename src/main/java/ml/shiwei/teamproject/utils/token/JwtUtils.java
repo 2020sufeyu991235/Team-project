@@ -3,10 +3,8 @@ package ml.shiwei.teamproject.utils.token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import ml.shiwei.teamproject.dao.TokenDao;
 import ml.shiwei.teamproject.entity.Token;
 import ml.shiwei.teamproject.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 

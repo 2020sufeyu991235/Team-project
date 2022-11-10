@@ -1,10 +1,13 @@
 package ml.shiwei.teamproject.service.impl;
 
 import ml.shiwei.teamproject.dao.UserDao;
+import ml.shiwei.teamproject.vo.IdNameRoleVo;
 import ml.shiwei.teamproject.entity.User;
 import ml.shiwei.teamproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 //实现UserService接口
@@ -21,5 +24,10 @@ public class UserServiceImpl implements UserService {
     //根据用户名查询用户信息
     public User inquireByUserName(String userName) {
         return userDao.findByUserName(userName);
+    }
+
+    //查询所有用户id，用户名，身份id
+    public List<IdNameRoleVo> findIdAndUserNameAndRoleId(){
+        return userDao.findIdAndUserNameAndRoleId();
     }
 }

@@ -2,8 +2,6 @@ package ml.shiwei.teamproject.dao;
 
 import ml.shiwei.teamproject.entity.User_Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author: swl

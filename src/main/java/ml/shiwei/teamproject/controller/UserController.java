@@ -1,14 +1,11 @@
 package ml.shiwei.teamproject.controller;
 
-import io.jsonwebtoken.Claims;
-import ml.shiwei.teamproject.dao.UserDao;
 import ml.shiwei.teamproject.entity.Token;
 import ml.shiwei.teamproject.entity.User;
 import ml.shiwei.teamproject.service.TokenService;
 import ml.shiwei.teamproject.service.UserService;
 import ml.shiwei.teamproject.utils.identicon.Result;
 import ml.shiwei.teamproject.utils.identicon.ResultCode;
-import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
