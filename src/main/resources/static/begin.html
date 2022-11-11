@@ -12,9 +12,9 @@
 <body>
 
 		<header class="header">
-		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="/" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>
+		<img src="/img/logo_c3.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="/" class="home" target="_self"><ion-icon name="home"></ion-icon>主页</a>
+		<a href="/user/login/html" class="login" id="login" target="_self">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
 				<option value="red" id="red">温暖色</option>
@@ -71,24 +71,6 @@
 		}
 	}
 
-	// var loginaq=document.getElementById("login");
-	// loginaq.onclick=function loginrequest(){
-	// 	$.ajax({
-	// 		url:'/user/login/html',
-	// 		type:'get',
-	// 		// async:false,
-    //             dataType:'html',
-    //             success:function(data){
-    //
-    //                 var newPage=window.open();
-    //                 newPage.document.write(data);
-    //             },
-    //             error:function(){
-    //                 console.log("fucking error")
-    //             }
-	// 	});
-	// }
-
 	$(function(){
             var user=localStorage.getItem("user");
 			//localStorage中有user数据
@@ -106,6 +88,11 @@
 								//Token失效，清空用户权限和Token信息
 								localStorage.removeItem("list");
 								localStorage.removeItem("user");
+								//用户名置空
+								document.cookie="username="+"; domain=localhost; path=/; expires=-1; "
+								//修改局部页面
+								document.getElementById("login").href="/user/login/html";
+								document.getElementById("login").innerHTML="登录";
 							}
 						},
 						error: function (data) {

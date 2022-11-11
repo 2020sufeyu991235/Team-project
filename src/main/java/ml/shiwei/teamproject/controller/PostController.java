@@ -19,12 +19,13 @@ public class PostController {
 
     //接收前端返回Post实例，初始化其余参数并存储进数据库
     @RequestMapping("/posting")
-    public void posting(@RequestBody Post post,@RequestHeader("token") String string){
+    public Result posting(@RequestBody Post post,@RequestHeader("token") String string){
         //解析Token获取用户id
         Claims claims= JwtUtils.checkToken(string);
         long userId= (int) claims.get("id");
         //初始化Post并存储
         postService.publish(post,userId);
+        return new Result(ResultCode.Success);
     }
 
     //接收上传的图片并存储
