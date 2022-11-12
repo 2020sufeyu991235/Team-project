@@ -8,8 +8,8 @@
 </head>
 <body>
 	<header class="header">
-		<img src="/img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="#" class="home"><ion-icon name="home"></ion-icon>主页</a>
+		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="/" class="home" target="_self"><ion-icon name="home"></ion-icon>主页</a>
 		<a  href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>	
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
@@ -22,9 +22,39 @@
 
 	<div class="banner"></div>
 	<div class="body">
-		<div class="left"></div>
-		<div class="right"></div>
+		<div class="left">
+			<div class="dh">全部</div>
+			<center><hr></center>
+			<div class="dh">一饭</div>
+			<center><hr></center>
+			<div class="dh">二饭</div>
+			<center><hr></center>
+			<div class="dh">三饭</div>
+			<center><hr></center>
+			<div class="dh">四饭</div>
+		</div>
+		<div class="right" id="right">
+			<div id="ppost">
+				<div id="ptitle"></div>
+			</div>
+		</div>
 	</div>
 	<div class="footer"></div>
 </body>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+<script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
+<script>
+	// 接收菜品列表
+	var mealist=[{title:"鸭腿饭"},{title:"鸡腿饭"}];
+
+	// 展示菜品
+	var righ=document.getElementById("right")
+	var str=''
+	for (var i = 0; i < mealist; i++) {
+		str += "<div id='ppost'>"+
+					"<div id='ptitle'>"+mealist[i].title+"</div>"+
+				"</div>"	
+	}
+	righ.innerHTML=str;
+</script>
 </html>
