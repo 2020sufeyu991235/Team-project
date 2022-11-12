@@ -2,6 +2,9 @@ package ml.shiwei.teamproject.service;
 
 import ml.shiwei.teamproject.entity.Post;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author tzf
  * @date 2022/11/7
@@ -15,4 +18,12 @@ public interface PostService {
      * @author tzf
      **/
     void publish(Post post,long userId);
+
+    /**
+     * 读取相应饭堂的帖子
+     * @param canteen 饭堂字符串，如"一饭"
+     * @return java.util.List 以Map<String,String>为元素的List列表，Map内装载着单个Post要传输的数据
+     * @author swl
+     **/
+    List<Map<String,String>> getList(String canteen);
 }
