@@ -195,7 +195,15 @@
                     this.tableData=resp.data.data.content;
                     //设置总记录数
                     this.totalCount=resp.data.data.totalElements;
-
+                    //排除自己
+                    var user=localStorage.getItem("user");
+                    var userObj=JSON.parse(user);
+                    var id=userObj.id;
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        if(this.tableData.id=id){
+                            this.tableData.pop(i);
+                        }
+                    }
                 });
             },
             tableRowClassName({row, rowIndex}) {
