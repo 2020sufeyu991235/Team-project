@@ -37,7 +37,7 @@
                 <el-input v-model="post.shop"></el-input>
             </el-form-item>
             <el-form-item label="价格" prop="price">
-                <el-input-number v-model="post.price" :precision="2" :step="0.01" :max="10"></el-input-number>
+                <el-input-number v-model="post.price" :precision="1" :step="0.1" ></el-input-number>
             </el-form-item>
 
             <el-form-item label="描述" prop="content">
@@ -94,7 +94,7 @@
         methods: {
             //发帖按钮的方法
             publishButton(){
-                /*var list=localStorage.getItem("list");
+                var list=localStorage.getItem("list");
                 if(list==null){
                     alert("你没有权限!");
                     return;
@@ -104,7 +104,7 @@
                 if(!listObj.includes("/posting")){
                     alert("你没有权限！");
                     return;
-                }*/
+                }
 
                 this.publishPostDialogVisible = true;
             },
@@ -124,10 +124,27 @@
                     let fd = new FormData()
                     fd.append('file', file.raw) //传给后台接收的名字 file
                     axios.post('/posting/upload', fd, {headers: {'Content-Type': 'multipart/form-data','token':token}}).then(response => {
-                        //上传成功后返回的数据,
-                        console.log("上传图片到:" + response.data);
-                        // 将图片地址给到表单.
-                        this.post.path = response.data
+                        //统一返回格式
+                        var data=response.data;
+                        if(data.code===200){
+                            //上传成功后返回的数据,
+                            console.log("上传图片到:" + data.data);
+                            // 将图片地址给到表单.
+                            this.post.path = data.data
+                        }
+                        else {
+                            console.log(data)
+                        }
+                    }).catch(error =>{
+                        //error.response：默认异常返回，本来想弄统一返回格式，但怕出错还是用默认的异常返回格式
+                        //状态码
+                        var status=error.response.status;
+                        if(status===403){
+                            alert("没有权限，上传图片失败。")
+                        }
+                        else{
+                            alert("上传图片失败")
+                        }
                     })
                 }else {
                     this.$refs.upload.clearFiles();
@@ -151,14 +168,18 @@
                 console.log(this.post);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        var user=localStorage.getItem("user");
+                        var userObj=JSON.parse(user);
+                        var token=userObj.string;
                         var _this = this;
                         axios({
                             method: "post",
-                            url: "http://localhost:8080/posting",
+                            url: "/posting",
+                            headers:{token:token},
                             data: _this.post
                         });
                         alert('发布成功!');
-                        location.replace(location.href);
+                    //    location.replace(location.href);
                     } else {
                         console.log('error submit!!');
                         return false;

@@ -30,13 +30,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public RequestInterceptor getRequestInterceptor(){
         return new RequestInterceptor();
     }
-
     //注册拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getRequestInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/list");
+                .excludePathPatterns("/resource/list")
+                .excludePathPatterns("/error/**");
     }
 }
-

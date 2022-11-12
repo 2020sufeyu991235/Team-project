@@ -1,11 +1,12 @@
 package ml.shiwei.teamproject.controller;
 
-import com.alibaba.fastjson.JSON;
-import ml.shiwei.teamproject.vo.IdNameRoleVo;
+import ml.shiwei.teamproject.entity.User;
+import ml.shiwei.teamproject.utils.identicon.ResultCode;
 import ml.shiwei.teamproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+import ml.shiwei.teamproject.utils.identicon.Result;
 
 import java.util.List;
 
@@ -21,13 +22,18 @@ public class UserManageController {
     @Autowired
     private UserService userService;
 
-    @GetMapping( "/findIdAndUserNameAndRoleId")
-    public String findIdAndUserNameAndRoleId(){
+    @RequestMapping ( "/findAllByPageConditional")
+    @ResponseBody
+    public Result  findAllByPage(Integer currentPage,Long id,Integer roleId,String userName){
 
-        List<IdNameRoleVo> idAndUserNameAndRoleId = userService.findIdAndUserNameAndRoleId();
+        Page<User> all = userService.findAllConditional(id,roleId,userName,currentPage-1, 10);
 
-        String jsonString = JSON.toJSONString(idAndUserNameAndRoleId);
+        return new Result(ResultCode.Success,all);
+    }
 
-        return jsonString;
+    @RequestMapping ( "/ChangeById")
+    @ResponseBody
+    public void changeById(Integer roleId,Long id){
+        userService.ChangeById(roleId,id);
     }
 }

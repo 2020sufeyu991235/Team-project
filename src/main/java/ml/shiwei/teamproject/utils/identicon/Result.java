@@ -15,7 +15,7 @@ public class Result {
 
     /**
      * Result构造方法
-     * @param resultCode 枚举类ResultCode实例，如：ResultCode.SUCCESS
+     * @param resultCode 枚举类ResultCode实例，如：ResultCode.Success
      * @param data Object类型，需要返回的数据
      * @author swl
      **/

@@ -42,6 +42,30 @@ public class User implements Serializable {
     @Column(name="password")
     private String passWord;
 
+    @OneToOne(cascade=CascadeType.ALL,optional = false)
+    @PrimaryKeyJoinColumn
+    private User_Role user_role;
+
+
+
+    public User_Role getUser_role() {
+        return user_role;
+    }
+
+    public void setUser_role(User_Role user_role) {
+        this.user_role = user_role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", user_role=" + user_role +
+                '}';
+    }
+
     public User(){}
 
     public User(String userName,String passWord){
@@ -72,12 +96,4 @@ public class User implements Serializable {
         this.passWord = passWord;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
-                '}';
-    }
 }

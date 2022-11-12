@@ -1,8 +1,6 @@
 package ml.shiwei.teamproject.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -19,6 +17,17 @@ public class Role implements Serializable {
     private int id;
 
     private String name;
+
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     public Role() {
     }
