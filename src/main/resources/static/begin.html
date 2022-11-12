@@ -13,8 +13,8 @@
 
 		<header class="header">
 		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="/" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>
+		<a href="/" class="home" target="_self"><ion-icon name="home"></ion-icon>主页</a>
+		<a href="/user/login/html" class="login" id="login" target="_self">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
 				<option value="red" id="red">温暖色</option>
@@ -55,13 +55,13 @@
 	var co=document.cookie.split(";");
 	for(var i=0;i<co.length;i++){
 		var c=co[i].trim();
-		if (c.indexOf(nn)==0) {
-			username=c.substring(nn.length,c.length);
-			if (username!="") {
-				document.getElementById("login").href="/";
-				document.getElementById("login").innerHTML=username;
-			}
-		}
+		// if (c.indexOf(nn)==0) {
+		// 	username=c.substring(nn.length,c.length);
+		// 	if (username!="") {
+		// 		document.getElementById("login").href="/";
+		// 		document.getElementById("login").innerHTML=username;
+		// 	}
+		// }
 		if (c.indexOf(cc)==0) {
 			ccolor=c.substring(cc.length,c.length);
 			if (ccolor!="") {
@@ -92,6 +92,7 @@
 	$(function(){
             var user=localStorage.getItem("user");
 			//localStorage中有user数据
+
 			if(user!=null) {
 				var userObj = JSON.parse(user);
 				var token = userObj.string;
@@ -106,6 +107,9 @@
 								//Token失效，清空用户权限和Token信息
 								localStorage.removeItem("list");
 								localStorage.removeItem("user");
+							}
+							else{
+								document.getElementById("login").innerHTML=userObj.name;
 							}
 						},
 						error: function (data) {
