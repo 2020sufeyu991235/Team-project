@@ -22,12 +22,12 @@
             <div class="form-group">
                 <label for="userName">用户名</label>
                 <!--输入用户名-->
-                <input type="text" class="form-control" id="userName" placeholder="please enter your name">
+                <input type="text" class="form-control" id="userName" placeholder="请输入用户名" spellcheck="false">
             </div>
             <div class="form-group">
                 <label for="passWord">密码</label>
                 <!--输入密码-->
-                <input type="password" class="form-control" id="passWord" placeholder="please enter your password">
+                <input type="password" class="form-control" id="passWord" placeholder="请输入密码">
             </div>
             <button type="button" class="btn btn-default" id="login">登录</button>
         </form>
@@ -78,9 +78,19 @@
                                 console.log("error");
                             }
                         });
+                        document.cookie="username="+username.value+"; domain=localhost; path=/; http=false; "
+                        alert("登录成功！");
+                        location.href = '/';
+                    }
+                    else if(code===10001){
+                        alert("密码错误！");
+                    }
+                    else{
+                        alert("登录失败！");
                     }
                 },
                 error:function(){
+                    alert("请勿重复登录！");
                     console.log("error");
                 }
             });

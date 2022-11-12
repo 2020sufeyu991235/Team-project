@@ -6,13 +6,13 @@
 <body>
 <div id="app">
     <!--发帖按钮-->
-        <el-button type="primary" plain @click="publishButton()">发帖</el-button>
+    <el-button type="primary" plain @click="publishButton()">发帖</el-button>
     <!--点击弹出对话框发帖表单-->
     <el-dialog
             title="编辑"
             :visible.sync="publishPostDialogVisible"
             width="100%"
-            >
+    >
 
         <el-form :model="post" :rules="rules" ref="post" label-width="100px" class="demo-post">
             <el-form-item label="标题" prop="title">
@@ -23,14 +23,14 @@
             </el-form-item>
             <el-form-item label="所在饭堂" prop="canteen">
                 <el-select v-model="post.canteen" placeholder="请选择菜品所在位置">
-                    <el-option label="一饭一楼" value="yifan1"></el-option>
-                    <el-option label="一饭二楼" value="yifan2"></el-option>
-                    <el-option label="二饭一楼" value="erfan1"></el-option>
-                    <el-option label="二饭二楼" value="erfan2"></el-option>
-                    <el-option label="三饭一楼" value="sanfan1"></el-option>
-                    <el-option label="三饭二楼" value="sanfan2"></el-option>
-                    <el-option label="四饭一楼" value="sifan1"></el-option>
-                    <el-option label="四饭二楼" value="sifan2"></el-option>
+                    <el-option label="一饭一楼" value="一饭一楼"></el-option>
+                    <el-option label="一饭二楼" value="一饭二楼"></el-option>
+                    <el-option label="二饭一楼" value="二饭一楼"></el-option>
+                    <el-option label="二饭二楼" value="二饭二楼"></el-option>
+                    <el-option label="三饭一楼" value="三饭一楼"></el-option>
+                    <el-option label="三饭二楼" value="三饭二楼"></el-option>
+                    <el-option label="四饭一楼" value="四饭一楼"></el-option>
+                    <el-option label="四饭二楼" value="四饭二楼"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="具体店铺" prop="shop">
@@ -177,9 +177,24 @@
                             url: "/posting",
                             headers:{token:token},
                             data: _this.post
-                        });
-                        alert('发布成功!');
-                    //    location.replace(location.href);
+                        }).then(response =>{
+                            var data=response.data;
+                            if(data.code===200){
+                                alert('发布成功!');
+                                location.replace(location.href);
+                            }
+                            else{
+                                alert('发布失败！');
+                            }
+                        }).catch(error =>{
+                            var status=error.response.status;
+                            if(status===403){
+                                alert('没有权限，发布失败！');
+                            }
+                            else{
+                                alert('发布失败！');
+                            }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -190,11 +205,11 @@
 
         data(){
             return{
+                fileList:[],
                 //发帖表单是否展示的标记
                 publishPostDialogVisible: false,
                 imgDialogVisible: false,
                 dialogImageUrl: '',
-                fileList: [],
                 //表单数据
                 post: {
                     title: '',
@@ -224,7 +239,7 @@
                     ]
                 }
             };
-            }
+        }
     })
 
 

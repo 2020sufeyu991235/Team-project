@@ -33,7 +33,13 @@ public class UserManageController {
 
     @RequestMapping ( "/ChangeById")
     @ResponseBody
-    public void changeById(Integer roleId,Long id){
+    public void changeById(Integer roleId,Long id,Integer oldRoleId,boolean power){
+        if(roleId>=3||oldRoleId>=3){
+            if(!power){
+                return;
+            }
+        }
+
         userService.ChangeById(roleId,id);
     }
 }

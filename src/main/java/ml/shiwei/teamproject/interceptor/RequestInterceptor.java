@@ -1,11 +1,12 @@
 package ml.shiwei.teamproject.interceptor;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.ObjectMapper;
+=======
+>>>>>>> 465d208ea657159c219d55339d55400d3138c55a
 import io.jsonwebtoken.Claims;
 import ml.shiwei.teamproject.service.ResourceService;
 import ml.shiwei.teamproject.service.TokenService;
-import ml.shiwei.teamproject.utils.identicon.Result;
-import ml.shiwei.teamproject.utils.identicon.ResultCode;
 import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -43,7 +41,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         //读取url
         String url= String.valueOf(request.getRequestURI());
         //为方便开发，暂保留拦截器输出内容
-        System.out.println("Request url:"+url);
+        //System.out.println("Request url:"+url);
         //用户id，默认为-1，表示未登录
         long userId=-1L;
 
@@ -58,27 +56,14 @@ public class RequestInterceptor implements HandlerInterceptor {
         }
         //读取用户权限
         List<String> resourceList=resourceService.list(userId);
-        System.out.println("Can be accessed:");
+        /*System.out.println("Can be accessed:");
         resourceList.forEach(System.out::println);
-        System.out.println("---------------------------");
+        System.out.println("---------------------------");*/
         if(resourceList.contains(url)){
             return true;
         }
         //返回访问失败页面
-        System.out.println("error");
-        /*try {
-            response.reset();
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json;charset=utf-8");
-            PrintWriter printWriter = response.getWriter();
-            ObjectMapper objectMapper = new ObjectMapper();
-            printWriter.write(objectMapper.writeValueAsString(new Result(ResultCode.Forbidden)));
-            printWriter.flush();
-            printWriter.close();
-        }catch (Exception e){
-            System.out.println("Response error");
-            e.printStackTrace();
-        }*/
+        System.out.println("request error");
         response.sendError(403,"没有权限访问");
         return false;
     }

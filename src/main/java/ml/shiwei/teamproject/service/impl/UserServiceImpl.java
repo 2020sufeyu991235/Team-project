@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 //实现UserService接口
@@ -89,7 +90,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void ChangeById(Integer roleId, Long id) {
-
         user_roleDao.updateRoleById(roleId,id);
     }
 

@@ -23,4 +23,6 @@ public interface UserDao extends JpaRepository<User,Long>, JpaSpecificationExecu
     //根据用户名查找用户User
     User findByUserName(String UserName);
 
+    //根据用户id查找用户
+    User findById(long id);
 }

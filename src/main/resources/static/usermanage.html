@@ -135,6 +135,7 @@
                 console.log(this.tableData[index]);
                 this.userChange.id=this.tableData[index].id;
                 this.userChange.userName=this.tableData[index].userName;
+                this.userChange.oldRoleId=this.tableData[index].roleId;
                 this.changeDialogVisible=true;
             },
             //修改确定
@@ -145,9 +146,20 @@
             },
             //修改用户数据
             ChangeById(){
+                var list=localStorage.getItem("list");
+                var listObj=JSON.parse(list);
+                if(this.userChange.roleId>=3||userChange.oldRoleId>=3){
+                    if(!listObj.includes("/super")) {
+                        alert("你没有权限！");
+                        return;
+                    }
+                }
+
                 const data = new URLSearchParams();
                 data.append("id",this.userChange.id);
                 data.append("roleId",this.userChange.roleId);
+                data.append("oldRoleId",this.userChange.oldRoleId);
+                data.append("power",listObj.includes("/super"));
                 axios({
                     method: "post",
                     url:"/ChangeById",
@@ -156,6 +168,18 @@
             },
             //分页查询数据
             selectAllConditional(){
+                var list=localStorage.getItem("list");
+                if(list==null){
+                    alert("你没有权限!");
+                    return;
+                }
+
+                var listObj=JSON.parse(list);
+                if(!listObj.includes("/findAllByPageConditional")) {
+                    alert("你没有权限！");
+                    return;
+                }
+
                 const data = new URLSearchParams();
                 data.append("currentPage", this.currentPage);
                 data.append("id",this.user.id);
@@ -211,6 +235,7 @@
                 currentPage: 1,
                 userChange:{
                     id:'',
+                    oldRoleId:'',
                     roleId:'',
                     userName: ''
                 },
