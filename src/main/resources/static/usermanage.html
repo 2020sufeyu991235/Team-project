@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+        .el-table .danger-row {
+            background: #F56C6C;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--搜索表单-->
+    <el-form :inline="true" :model="user" class="demo-form-inline">
+        <el-form-item label="用户id" prop="id" :rules="[{type: 'number', message: '用户id必须为数字值'}]">
+            <el-input v-model.number="user.id" placeholder="用户id" ></el-input>
+        </el-form-item>
+        <el-form-item label="用户名">
+            <el-input v-model="user.userName" placeholder="用户名"></el-input>
+        </el-form-item>
+        <el-form-item label="身份">
+            <el-select v-model="user.roleId" placeholder="身份">
+                <el-option label="所有用户" value=''></el-option>
+                <el-option label="禁言用户" value="0"></el-option>
+                <el-option label="普通用户" value="2"></el-option>
+                <el-option label="管理员" value="3"></el-option>
+                <el-option label="超级管理员" value="4"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+    </el-form>
+    <!--表格-->
+    <template>
+        <el-table
+                :data="tableData"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+                @selection-change="handleSelectionChange">
+            <el-table-column
+                    type="selection"
+                    width="55">
+            </el-table-column>
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    prop="id"
+                    align="center"
+                    label="用户id">
+            </el-table-column>
+            <el-table-column
+                    prop="userName"
+                    align="center"
+                    label="用户名">
+            </el-table-column>
+            <el-table-column
+                    prop="user_role.role.name"
+                    align="center"
+                    label="身份">
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    label="操作">
+                    <template slot-scope="scope">
+                        <el-button
+                                @click="changeButton(scope.$index)">修改</el-button>
+                        <el-button type="primary">详情</el-button>
+                    </template>
+            </el-table-column>
+        </el-table>
+    </template>
+    <!--分页工具条-->
+    <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="10"
+            layout="total, prev, pager, next, jumper"
+            :total="totalCount">
+    </el-pagination>
+    <!--修改操作的对话框-->
+    <el-dialog
+            title="修改身份"
+            :visible.sync="changeDialogVisible"
+            width="30%">
+        <el-form :model="userChange" class="demo-form-inline">
+            <el-form-item label="用户id" prop="id" >
+                <el-input :disabled="true" v-model="userChange.id" placeholder="用户id" ></el-input>
+            </el-form-item>
+            <el-form-item label="用户名">
+                <el-input :disabled="true" v-model="userChange.userName" placeholder="用户名"></el-input>
+            </el-form-item>
+            <el-form-item label="身份">
+                <el-select v-model="userChange.roleId" placeholder="身份">
+                    <el-option label="禁言用户" value="0"></el-option>
+                    <el-option label="普通用户" value="2"></el-option>
+                    <el-option label="管理员" value="3"></el-option>
+                    <el-option label="超级管理员" value="4"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="changeSure()">确 定</el-button>
+  </span>
+    </el-dialog>
+</div>
+<script src="js/vue.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script>
+
+
+    new Vue({
+        el:"#app",
+        mounted(){
+            //当页面加载完成后，发送异步请求，获取数据
+            this.selectAllConditional();
+        },
+
+        methods: {
+            //点击修改按钮
+            changeButton(index){
+                console.log(this.tableData[index]);
+                this.userChange.id=this.tableData[index].id;
+                this.userChange.userName=this.tableData[index].userName;
+                this.userChange.oldRoleId=this.tableData[index].roleId;
+                this.changeDialogVisible=true;
+            },
+            //修改确定
+            changeSure(){
+                this.ChangeById();
+                this.changeDialogVisible=false;
+                this.selectAllConditional();
+            },
+            //修改用户数据
+            ChangeById(){
+                var list=localStorage.getItem("list");
+                var listObj=JSON.parse(list);
+                if(this.userChange.roleId>=3||userChange.oldRoleId>=3){
+                    if(!listObj.includes("/super")) {
+                        alert("你没有权限！");
+                        return;
+                    }
+                }
+
+                const data = new URLSearchParams();
+                data.append("id",this.userChange.id);
+                data.append("roleId",this.userChange.roleId);
+                data.append("oldRoleId",this.userChange.oldRoleId);
+                data.append("power",listObj.includes("/super"));
+                axios({
+                    method: "post",
+                    url:"/ChangeById",
+                    data: data
+                })
+            },
+            //分页查询数据
+            selectAllConditional(){
+                var list=localStorage.getItem("list");
+                if(list==null){
+                    alert("你没有权限!");
+                    return;
+                }
+
+                var listObj=JSON.parse(list);
+                if(!listObj.includes("/findAllByPageConditional")) {
+                    alert("你没有权限！");
+                    return;
+                }
+
+                const data = new URLSearchParams();
+                data.append("currentPage", this.currentPage);
+                data.append("id",this.user.id);
+                data.append("userName",this.user.userName);
+                data.append("roleId",this.user.roleId);
+                axios({
+                    method: "post",
+                    url:"/findAllByPageConditional",
+                    data: data
+                }).then(resp =>{
+                    console.log(resp.data);
+                    //设置表格数据
+                    this.tableData=resp.data.data.content;
+                    //设置总记录数
+                    this.totalCount=resp.data.data.totalElements;
+                    //排除自己
+                    var user=localStorage.getItem("user");
+                    var userObj=JSON.parse(user);
+                    var id=userObj.id;
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        if(this.tableData.id=id){
+                            this.tableData.pop(i);
+                        }
+                    }
+                });
+            },
+            tableRowClassName({row, rowIndex}) {
+                if (this.tableData[rowIndex].user_role.roleId=== 0) {
+                    return 'danger-row';
+                }  else if (this.tableData[rowIndex].user_role.roleId=== 3) {
+                    return 'warning-row';
+                } else if (this.tableData[rowIndex].user_role.roleId=== 4) {
+                    return 'success-row';
+                };
+                return '';
+            },
+            //复选框选中后执行的方法
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+                console.log(this.multipleSelection);
+            },
+            onSubmit(formName) {
+                this.selectAllConditional();
+            },
+            handleCurrentChange(val) {
+            //    console.log(`当前页: ${val}`);
+                this.currentPage = val;
+                this.selectAllConditional();
+            }
+
+        },
+
+
+        data() {
+            //搜索表单数据
+            return {
+                //修改操作对话框是否显示
+                changeDialogVisible:false,
+                //总记录数
+                totalCount:0,
+                currentPage: 1,
+                userChange:{
+                    id:'',
+                    oldRoleId:'',
+                    roleId:'',
+                    userName: ''
+                },
+                user: {
+                    id:'',
+                    roleId:'',
+                    userName: ''
+                },
+                //表格数据
+                tableData: [{
+                    id:'',
+                    user_role: {
+                        roleId:'',
+                        role: {
+                            name:''
+                        }
+                    },
+                    userName: ''
+
+                }],
+                //复选框选中数据集合
+                multipleSelection: []
+            }
+        }
+    })
+
+
+</script>
+</body>

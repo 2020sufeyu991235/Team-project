@@ -1,54 +1,61 @@
-package ml.shiwei.teamproject.service.impl;
+package ml.shiwei.teamproject.user;
 
 import ml.shiwei.teamproject.dao.UserDao;
 import ml.shiwei.teamproject.dao.User_RoleDao;
 import ml.shiwei.teamproject.entity.User;
 import ml.shiwei.teamproject.service.UserService;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@Service
-//实现UserService接口
-public class UserServiceImpl implements UserService {
-    /*
-     * @Autowired
-     * 自动装配，从loC容器查看相应的bean，返回实例对象
-     * 参考：https://www.cnblogs.com/fnlingnzb-learner/p/9723834.html
-     */
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+/**
+ * @author tzf
+ * @date 2022/11/10
+ * @Description
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+class UserManageTest {
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private UserDao userDao;
 
     @Autowired
     private User_RoleDao user_roleDao;
-
-    @Override
-    //根据用户名查询用户信息
-    public User inquireByUserName(String userName) {
-        return userDao.findByUserName(userName);
+    @Test
+    //查询所有测试
+    void findIdAndUserNameAndRoleIdTest(){
+        Page<User> all = userService.findAll(0, 5);
+        System.out.println(all.getContent());
+    }
+    //条件查询测试
+    @Test
+    void findIdAndUserNameAndRoleIdTestConditional(){
+        Page<User> all = userService.findAllConditional(null ,0,null,0,2);
+        System.out.println(all);
     }
 
-    //分页查询所有
-    @Override
-    public Page<User> findAll(int currentPage, int pageSize) {
-        Pageable pageable = PageRequest.of(currentPage, pageSize);
-        return userDao.findAll(pageable);
-    }
+    //动态查询测试
+    @Test
+    void testspec() {
+        Integer id = null;
 
+        Integer roleId=null;
+        String userName = null;
 
-
-    @Override
-    public Page<User> findAllConditional(Long id,Integer roleId, String userName, Integer pageNo, Integer pageSize) {
-        //动态查询
         Specification<User> spec = new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -83,15 +90,14 @@ public class UserServiceImpl implements UserService {
                 return query.orderBy(orders).getRestriction();
             }
         };
-
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return userDao.findAll(spec,pageable);
-    }
-
-    @Override
-    public void ChangeById(Integer roleId, Long id) {
-        user_roleDao.updateRoleById(roleId,id);
+        List<User> all = userDao.findAll(spec);
+        System.out.println(all);
     }
 
 
+    //修改身份测试
+    @Test
+    void changeById(){
+        user_roleDao.updateRoleById(0,11L);
+    }
 }

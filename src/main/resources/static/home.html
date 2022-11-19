@@ -6,13 +6,13 @@
 <body>
 <div id="app">
     <!--发帖按钮-->
-        <el-button type="primary" plain @click="publishButton()">发帖</el-button>
+    <el-button type="primary" plain @click="publishButton()">发帖</el-button>
     <!--点击弹出对话框发帖表单-->
     <el-dialog
             title="编辑"
             :visible.sync="publishPostDialogVisible"
             width="100%"
-            >
+    >
 
         <el-form :model="post" :rules="rules" ref="post" label-width="100px" class="demo-post">
             <el-form-item label="标题" prop="title">
@@ -239,7 +239,7 @@
                     ]
                 }
             };
-            }
+        }
     })
 
 

@@ -1,9 +1,6 @@
 package ml.shiwei.teamproject.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -22,11 +19,33 @@ public class User_Role implements Serializable {
     @Column(name="roleId")
     private int roleId;
 
+    @JoinColumn(name = "roleId",referencedColumnName = "id",insertable = false,updatable = false)
+    @OneToOne
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
     public User_Role(){}
 
     public User_Role(Long userId, int roleId) {
         this.userId = userId;
         this.roleId = roleId;
+    }
+
+    @Override
+    public String toString() {
+        return "User_Role{" +
+                "userId=" + userId +
+                ", roleId=" + roleId +
+                ", role=" + role.getName() +
+                '}';
     }
 
     public Long getUserId() {

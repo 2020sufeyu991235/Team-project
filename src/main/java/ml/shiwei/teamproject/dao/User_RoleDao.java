@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
+
 /**
  * @author: swl
  * @date: 2022/11/4
@@ -22,4 +24,9 @@ public interface User_RoleDao extends JpaRepository<User_Role,Long> {
     //User_Role getRoleId(Long id);
 
     User_Role findByUserId(Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update User_Role  set roleId = ?1 where userId=?2")
+    void updateRoleById(Integer roleId,Long id);
 }
