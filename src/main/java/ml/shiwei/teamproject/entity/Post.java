@@ -25,32 +25,46 @@ public class Post implements Serializable {
 
     //发布用户id
     private Long userId;
+
     //标题
     private String title;
+
     //内容
     private String content;
+
     //图片存储路径
     private String path;
+
     //发布时间
     private Date time;
+
     //最后评论时间
     private Date comment_time;
+
     //浏览次数
     private int views;
+
     //评论数
     private int comments;
+
     //热度
     private int heat;
+
     //点赞量
     private int likes;
+
     //踩
     private int step;
+
     //菜品
     private String food;
+
     //价格
     private float price;
+
     //店铺
     private String shop;
+
     //饭堂
     private String canteen;
 
