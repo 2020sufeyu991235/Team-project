@@ -37,7 +37,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/resource/list")
                 .excludePathPatterns("/error/**")
-                .excludePathPatterns("/post/view")
-                .excludePathPatterns("/post/list");
+                .excludePathPatterns("/post/**")
+                .excludePathPatterns("/user/comment/list");
     }
 }

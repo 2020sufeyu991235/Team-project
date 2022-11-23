@@ -25,7 +25,13 @@ public interface PostService {
      * @return java.util.List 以Map<String,String>为元素的List列表，Map内装载着单个Post要传输的数据
      * @author swl
      **/
-    List<Map<String,String>> getList(String canteen);
+    List<Map<String,String>> getListByCanteen(String canteen);
 
-    Map<String,String> getList(long id);
+    /**
+     * 读取具体帖子内容
+     * @param id 帖子id
+     * @return java.util.Map<java.lang.String,java.lang.String> 帖子参数map
+     * @author swl
+     **/
+    Map<String,String> getListByPostId(long id);
 }

@@ -43,7 +43,7 @@ public class PostController {
     //根据饭堂返回相应帖子
     @RequestMapping("/post/list")
     public Result list(@RequestBody String canteen){
-        List<Map<String,String>> list=postService.getList(canteen);
+        List<Map<String,String>> list=postService.getListByCanteen(canteen);
         if(list!=null){
             list.forEach(System.out::println);
             return new Result(ResultCode.Success,list);
@@ -55,7 +55,7 @@ public class PostController {
     @RequestMapping("/post/view")
     public Result view(@RequestBody String postId){
         long id=Integer.parseInt(postId);
-        Map<String,String> map=postService.getList(id);
+        Map<String,String> map=postService.getListByPostId(id);
         if(map!=null){
             return new Result(ResultCode.Success,map);
         }

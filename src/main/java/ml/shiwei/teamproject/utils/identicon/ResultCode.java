@@ -15,7 +15,8 @@ public enum ResultCode {
     Token_Outdated(10002,"Token失效"),
     Token_Empty(10003,"Token为空"),
     File_Empty(10004,"上传文件为空"),
-    PostEmptyOrEnterError(10005,"帖子为空或输入参数错误");
+    PostEmptyOrEnterError(10005,"帖子为空或输入参数错误"),
+    CommentNotExistOrParameterError(10006,"评论不存在或参数错误");
 
     private final int code;
     private final String message;

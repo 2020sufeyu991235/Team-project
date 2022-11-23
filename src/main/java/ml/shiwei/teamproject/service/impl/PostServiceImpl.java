@@ -48,7 +48,7 @@ public class PostServiceImpl implements PostService {
      * @author swl
      **/
     @Override
-    public List<Map<String, String>> getList(String canteen) {
+    public List<Map<String, String>> getListByCanteen(String canteen) {
         List<Map<String,String>> list = new ArrayList<>();
         List<Post> posts;
         if(!canteen.equals("all")) {
@@ -84,8 +84,14 @@ public class PostServiceImpl implements PostService {
         return null;
     }
 
+    /**
+     * 读取具体帖子内容
+     * @param id 帖子id
+     * @return java.util.Map<java.lang.String,java.lang.String> 帖子参数map
+     * @author swl
+     **/
     @Override
-    public Map<String, String> getList(long id) {
+    public Map<String, String> getListByPostId(long id) {
         Post post=postDao.findById(id);
         if(post!=null){
             Map<String,String> map=new HashMap<>();

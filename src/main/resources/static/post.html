@@ -98,16 +98,11 @@
                             <a href="/" target="_self">主页</a>
                         </el-menu-item>
 
-
-
-                        <el-menu-item index="3">
-
-                        </el-menu-item>
                     </el-menu>
                 </div>
                 <div style="display: inline-block;margin-left: 50%;">
-                    <el-menu style="width: 100%;" class="el-menu-demo" mode="horizontal"
-                        background-color="#faf4f3" text-color="#54A94D" active-text-color="#e18d8d">
+                    <el-menu style="width: 100%;" class="el-menu-demo" mode="horizontal" background-color="#faf4f3"
+                        text-color="#54A94D" active-text-color="#e18d8d">
                         <el-menu-item index="2">
                             <a href="user/login/html" target="_self">登录</a>
                         </el-menu-item>
@@ -346,17 +341,20 @@
                         console.log(resp.data);
                         this.post = resp.data.data;
                         commentNum = resp.data.data.comments;
+                        if (commentNum > "0") {
+                            axios({
+                                method: 'post',
+                                url: '/post/comment/view',
+                                data: postId,
+                                headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+                            }).then(resp => {
+                                console.log(resp.data);
+                                this.commentArray = resp.data.data;
+                            });
+                        }
                     });
 
-                    /* if(commentNum>0){
-                        axios({
-                            methods:"post",
-                            url:"/comment/view",
-                        }).then(resp=>{
-                            console.log(resp.data);
-                            this.commentArray=resp.data.data.content;
-                        })
-                    } */
+
                 },
 
                 //显示发布按钮
@@ -405,24 +403,14 @@
                     },
 
                     commentArray: [{
-                        commentId: 1,
-                        content: '哈哈，写评论送饮料，我想起来了，我出差住宾馆，前台小姐姐说，写评论给你免费升级',
-                        likes: 6,
-                        parentId: 8,
-                        step: 2,
-                        time: '2022-11-11 12:12:46',
-                        userName: '故乡',
-                    },
-                    {
-                        commentId: 2,
-                        content: '到收藏夹吃灰吧',
-                        likes: 2,
-                        parentId: 8,
-                        step: 5,
-                        time: '2022-11-12 11:15:46',
-                        userName: '花败花开',
-                    }
-                    ],
+                        floor: '',
+                        content: '',
+                        likes: '',
+                        parentFloor: '',
+                        step: '',
+                        time: '',
+                        userName: '',
+                    }],
 
                     textarea: ''
                 }

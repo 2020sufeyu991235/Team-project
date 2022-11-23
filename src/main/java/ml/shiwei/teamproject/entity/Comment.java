@@ -21,12 +21,14 @@ public class Comment implements Serializable {
     @GeneratedValue
     private Long id;
 
-    //上级评论id
-    private Long parent_id;
+    //评论楼层
+    private int floor;
+    //上级评论楼层
+    private int parentFloor;
     //帖子id
-    private Long post_id;
+    private Long postId;
     //用户id
-    private Long user_id;
+    private Long userId;
     //内容
     private String content;
     //图片路径
@@ -46,28 +48,36 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public Long getParent_id() {
-        return parent_id;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setParent_id(Long parent_id) {
-        this.parent_id = parent_id;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
-    public Long getPost_id() {
-        return post_id;
+    public int getParentFloor() {
+        return parentFloor;
     }
 
-    public void setPost_id(Long post_id) {
-        this.post_id = post_id;
+    public void setParentFloor(int parentFloor) {
+        this.parentFloor = parentFloor;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getContent() {
