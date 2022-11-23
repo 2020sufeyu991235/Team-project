@@ -4,27 +4,168 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>学校</title>
-	<link rel="stylesheet" href="show.css">
+	<link rel="stylesheet" href="/css/show.css">
+	<link rel="stylesheet" type="text/css" href="/css/redcolor.css" id="csscolor">
 </head>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+<script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
+<script>
+	// 接收菜品列表
+	function arrlist(can){
+		var str=''
+		$.ajax({
+			url:"/post/list",
+			type:"post",
+			data:can,
+			dataType:"json",
+			contentType:"application/json",
+			success:function(data){
+				var righ=document.getElementById("right");
+				var list=data.data;
+				for(var i in list){
+					str+="<div id='' class='idi'>"+
+							"<div id='ptitle'>"+list[i].title+"</div>"+
+							"<div class='text'>"+
+							"<div class='uname'>"+list[i].userName+"</div>"+
+							"<div class='time'>"+list[i].time+"</div>"+
+							"<div class='comments'>"+"<img src='img/com.png' alt='评论数:' style='vertical-align: -10%'></img>"+list[i].comments+"</div>"+
+							"<div class='ctime'>"+"最后评论时间:"+list[i].commentTime+"</div>"+
+							"</div>"+
+							"<div class='tag'>"+
+					"<div class='food'>"+list[i].food+"</div>"+
+					"<div class='pri'>"+"￥"+list[i].price+"</div>"+
+					"</div>"+
+					"</div>"
+				}
+				righ.innerHTML=str;
+			},
+			error:function(e){
+				console.log("error");
+			}
+		})
+	}
+
+	arrlist("all");
+
+
+
+
+
+
+
+</script>
 <body>
 	<header class="header">
-		<img src="/img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
-		<a href="#" class="home"><ion-icon name="home"></ion-icon>主页</a>
-		<a  href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>	
+		<img src="../img/logo_c.png" alt="">					<!-- 网站标志或者换成文字 -->
+		<a href="/" class="home" target="_self"><ion-icon name="home"></ion-icon>主页</a>
+		<a  href="http://localhost:8080/user/login/html" class="login" id="login" target="_self">登录</a>
 		<div class="colors">风格
 			<select id="abc" onchange="changecolor(this.value)">
-				<option value="red">温暖色</option>
-				<option value="black">黑白配</option>
-				<option value="blue">清凉色</option>
+				<option value="red" id="red">温暖色</option>
+				<option value="black" id="black">黑白配</option>
+				<option value="blue" id="blue">清凉色</option>
 			</select>
 		</div>	
 	</header>
 
 	<div class="banner"></div>
 	<div class="body">
-		<div class="left"></div>
-		<div class="right"></div>
+		<div class="left">
+			<div class="dh" data-id="all">全部</div>
+			<center><hr></center>
+			<div class="dh" data-id="一饭">一饭</div>
+			<center><hr></center>
+			<div class="dh" data-id="二饭">二饭</div>
+			<center><hr></center>
+			<div class="dh" data-id="三饭">三饭</div>
+			<center><hr></center>
+			<div class="dh" data-id="四饭">四饭</div>
+		</div>
+		<div class="right" id="right">
+			<div id="" class="idi">
+				<div id="ptitle">标题</div>
+				<div class="text">
+					<div class="uname">名字</div>
+					<div class="time">发布时间</div>
+					<div class="comments">评论数</div>
+					<div class="ctime">评论时间</div>
+				</div>
+				<div class="tag">
+					<div class="food">食物名</div>
+					<div class="pri">价钱</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="footer"></div>
 </body>
+
+<script>
+
+	$(".dh").click((e)=>{
+	var dhid=e.target.dataset.id;
+	console.log(e);
+	arrlist(dhid);
+	})
+
+	function autocolor(){
+		var ccolor = null;
+		var cc = "colorstyle=";
+		var co = document.cookie.split(";");
+		for (var i = 0; i < co.length; i++) {
+			var c = co[i].trim();
+			if (c.indexOf(cc) == 0) {
+				ccolor = c.substring(cc.length, c.length);
+				if (ccolor != "") {
+					document.getElementById(ccolor).selected = "selected";
+					document.getElementById("csscolor").href = "/css/" + ccolor + "color.css";
+				}
+			}
+		}
+	};
+
+	autocolor();
+	setInterval("autocolor()","1000");
+
+	var ccolor=document.getElementById("csscolor");
+	function changecolor(color_style){
+		ccolor.href="/css/"+color_style+"color.css";
+		document.cookie="colorstyle="+color_style+"; domain=localhost; path=/; http=false; "
+	}
+
+	$(function(){
+		var user=localStorage.getItem("user");
+		//localStorage中有user数据
+		if(user!=null) {
+			var userObj = JSON.parse(user);
+			var token = userObj.string;
+			if (token != null) {
+				$.ajax({
+					url: "/user/login/token",
+					type: "get",
+					headers: {"token": token},
+					success: function (data) {
+						console.log(data);
+						if (data.code != 200) {
+							//Token失效，清空用户权限和Token信息
+							localStorage.removeItem("list");
+							localStorage.removeItem("user");
+							//用户名置空
+							document.cookie="username="+"; domain=localhost; path=/; expires=-1; "
+							//修改局部页面
+							document.getElementById("login").href="/user/login/html";
+							document.getElementById("login").innerHTML="登录";
+						}
+						else{
+							document.getElementById("login").innerHTML=userObj.name;
+						}
+					},
+					error: function (data) {
+						console.log(error);
+					}
+				});
+			}
+		}
+	});
+</script>
 </html>

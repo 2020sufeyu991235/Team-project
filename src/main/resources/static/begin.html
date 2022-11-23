@@ -31,7 +31,7 @@
 			<div class="uname">广东工业大学</div>
 			<hr style="border: none;height: 1px;" >
 			<div class="zone">
-				<div>
+				<div value="univer" id="cart" onclick="window.open('/show.html','_self')">
 					<span>大学城校区</span></div>
 				<div>
 					<span>龙洞校区</span></div>
@@ -47,7 +47,7 @@
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
 <script>
-
+	function autocolor(){
 	var username=null;
 	var nn="username="
 	var ccolor=null;
@@ -55,13 +55,13 @@
 	var co=document.cookie.split(";");
 	for(var i=0;i<co.length;i++){
 		var c=co[i].trim();
-		if (c.indexOf(nn)==0) {
-			username=c.substring(nn.length,c.length);
-			if (username!="") {
-				document.getElementById("login").href="/";
-				document.getElementById("login").innerHTML=username;
-			}
-		}
+		// if (c.indexOf(nn)==0) {
+		// 	username=c.substring(nn.length,c.length);
+		// 	if (username!="") {
+		// 		document.getElementById("login").href="/";
+		// 		document.getElementById("login").innerHTML=username;
+		// 	}
+		// }
 		if (c.indexOf(cc)==0) {
 			ccolor=c.substring(cc.length,c.length);
 			if (ccolor!="") {
@@ -70,6 +70,28 @@
 			}
 		}
 	}
+};
+
+	autocolor();
+	setInterval("autocolor()","100");
+
+	// var loginaq=document.getElementById("login");
+	// loginaq.onclick=function loginrequest(){
+	// 	$.ajax({
+	// 		url:'/user/login/html',
+	// 		type:'get',
+	// 		// async:false,
+    //             dataType:'html',
+    //             success:function(data){
+    //
+    //                 var newPage=window.open();
+    //                 newPage.document.write(data);
+    //             },
+    //             error:function(){
+    //                 console.log("fucking error")
+    //             }
+	// 	});
+	// }
 
 	$(function(){
             var user=localStorage.getItem("user");
@@ -94,6 +116,9 @@
 								document.getElementById("login").href="/user/login/html";
 								document.getElementById("login").innerHTML="登录";
 							}
+							else{
+								document.getElementById("login").innerHTML=userObj.name;
+							}
 						},
 						error: function (data) {
 							console.log(error);
@@ -103,6 +128,8 @@
 			}
         });
 
+    // var inshow=document.getElementById("cart");
+    // inshow.onclick=function(inshow.value)
 
 	var ccolor=document.getElementById("csscolor");
 	function changecolor(color_style){

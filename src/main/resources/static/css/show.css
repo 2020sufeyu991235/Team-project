@@ -1,11 +1,180 @@
+body{
+	min-width: 1300px;       /*缩到1300就开始缩窗口视野，用来避免网页变乱*/
+	cursor: default;           /*把一些文本选择鼠标样式改成普通样式*/
+	background-color: #faf4f3;
+}
 *{
 	margin: 0;
 	padding: 0;
 }
-.header,
+ul {
+	list-style: none;
+}
+.clearfix:before, .clearfix:after {
+	display: table;
+	content: "";
+}
+.clearfix:after {
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+a {
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .banner,
-.body,
+.left,
 .footer{
 	margin: 0 auto;
 	text-align: center;
+}
+.header{
+	height: 52px;
+	background-color: #e18d8d;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2000;
+}
+.header a{
+	color: #fff;
+	position: absolute;
+	height: 52px;
+	line-height: 52px;
+}
+.header a ion-icon{
+	vertical-align: -4%;
+}
+.home {
+	left: 16%;
+}
+.header img{
+	height: 52px;
+	width: 100px;
+	padding-left: 7%;
+}
+.login{
+	right: 22%;
+}
+.colors{
+	height: 52px;
+	display: inline-block;
+	position: absolute;
+	right: 10%;
+	line-height: 52px;
+	color: #fff;
+}
+.colors select{
+	border: none;
+	outline: none;
+	margin-left: 5px;
+	border-radius: 4px;
+	height: 26px;
+	width: 70px;
+	background-color: #fff;
+}
+.banner{
+	height: 52px;
+}
+.body{
+	position: relative;
+	margin-left: 20%;
+}
+.left{
+	margin-top: 64px;
+	float: left;
+	position: fixed;
+	background-color: #fff;
+	width: 10%;
+	align-items: center;
+	border-radius: 3px;
+}
+.left div{
+	border: 3px solid #fff;
+	height: 40px;
+	line-height: 40px;
+	padding: 3px;
+	border-radius: 5px;
+}
+.left div:hover{
+	background-color: #e29181;
+
+
+}
+.left hr{
+	border: none 0;
+	border-bottom: 1px solid #d94021;
+	background-color: #fff;
+	height: 1px;
+	width: 96%;
+	text-align: center;
+	color: #fff;
+	clear: both;
+	line-height: 1px;
+	font-size: 0;
+}
+.right{
+	margin-left: 15%;
+	margin-right: 15%;
+	padding-top: 50px;
+}
+.idi{
+	border: solid #ddd 2px;
+	border-radius: 10px;
+	margin-top: 8px;
+	background-color: #fafafa;
+}
+#ptitle{
+	margin-left: 10px;
+	font-size: 18px;
+	border-bottom: inset #dadada 1px;
+}
+.text,
+.tag{
+	position: relative;
+	padding-top: 6px;
+}
+.text{
+	height: 26px;
+	line-height: 26px;
+}
+.tag{
+	height: 18px;
+}
+.uname,
+.time,
+.comments,
+.ctime,
+.food,
+.pri{
+	position: absolute;
+	font-size: 14px;
+	color: #626262;
+}
+.uname{
+	left: 7%;
+}
+.time{
+	left: 25%;
+}
+.comments{
+	left: 60%;
+}
+.ctime{
+	left:70% ;
+}
+.food,
+.pri{
+	font-size: 12px;
+	color: #bababa;
+}
+.food{
+	right: 20%;
+}
+.pri{
+	right: 10%;
 }
