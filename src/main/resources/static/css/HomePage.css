@@ -1,12 +1,12 @@
-		body{                                      
+		body{
 			min-width: 1300px;       /*缩到1300就开始缩窗口视野，用来避免网页变乱*/
 			cursor: default;           /*把一些文本选择鼠标样式改成普通样式*/
 			background-color: #faf4f3;
 		}
-		* {                            
+		* {
 			margin: 0;
 			padding: 0;
-			font-family: 'Poppins',sans-serif; 
+			font-family: 'Poppins',sans-serif;
 		}
 		ul {
 			list-style: none;
@@ -31,9 +31,9 @@
 			position: fixed;
 		}*/
 		.header{
-			height: 60px;
+			height: 52px;
 			background-color: #e18d8d;
-			position: fixed;			
+			position: fixed;
 			top: 0;
 			width: 100%;
 			z-index: 2000;
@@ -42,30 +42,29 @@
 		.header a{
 			color: #fff;
 			position: absolute;
-			top:27%;
-			font-size:120%;
+			height: 52px;
+			line-height: 52px;
 		}
 		.header a ion-icon{
 			vertical-align: -4%;
 		}
 		.home {
-			left: 20%;
+			left: 16%;
 		}
 		.header img{
-			height: 80%;
-			position: absolute;
-        	top: 10%;
+			height: 52px;
+			width: 100px;
 			padding-left: 4%;
 		}
 		.login{
-			right:15%;
+			right: 22%;
 		}
 		.colors{
+			height: 52px;
 			display: inline-block;
 			position: absolute;
-			font-size: 120%;
-			top: 27%;
-			right: 1%;
+			right: 10%;
+			line-height: 52px;
 			color: #fff;
 		}
 		.colors select{
