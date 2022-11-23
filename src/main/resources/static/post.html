@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>帖子查看</title>
+    <style>
+        .icon {
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        div,
+        textarea {
+            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+        }
+
+        #main {
+            width: 75%;
+            height: auto;
+            margin-left: 0;
+            background-color: white;
+            border: 1px solid #eee;
+            display: inline-block;
+        }
+
+        #card {
+            width: 15%;
+            height: auto;
+            margin-left: 0;
+            background-color: white;
+            border: 1px solid #eee;
+            display: inline-block;
+            vertical-align: top;
+            position: fixed;
+        }
+
+        #comments {
+            width: 75%;
+            height: auto;
+            margin-left: 0;
+            margin-top: 5px;
+            background-color: white;
+            border: 1px solid #eee;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .el-page-header {
+            margin-bottom: 20px;
+        }
+
+        .el-row {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 20px;
+        }
+
+        .el-badge {
+            margin-bottom: 20px;
+        }
+
+        a {
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .el-menu-item.is-active {
+            background-color: #ff808016 !important;
+        }
+
+        .el-menu-item:hover {
+            background-color: #ff808016 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!--顶部栏-->
+        <el-container style="height: 65px;border: 1px solid #eee;background-color: #faf4f3;">
+            <el-header>
+                <div
+                    style="height: auto;margin-top: 8px;margin-left: 15px;margin-right: 5%;display: inline-block;border: 1px solid #eee;vertical-align: top;">
+                    <img src="img/logo_c3.png" alt="" style="height: 45px;">
+                </div>
+                <div style="display: inline-block;width: auto;">
+                    <el-menu style="width: 100%;" :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
+                        background-color="#faf4f3" text-color="#54A94D" active-text-color="#e18d8d">
+
+                        <el-menu-item index="1">
+                            <a href="/" target="_self">主页</a>
+                        </el-menu-item>
+
+
+
+                        <el-menu-item index="3">
+
+                        </el-menu-item>
+                    </el-menu>
+                </div>
+                <div style="display: inline-block;margin-left: 50%;">
+                    <el-menu style="width: 100%;" class="el-menu-demo" mode="horizontal"
+                        background-color="#faf4f3" text-color="#54A94D" active-text-color="#e18d8d">
+                        <el-menu-item index="2">
+                            <a href="user/login/html" target="_self">登录</a>
+                        </el-menu-item>
+                    </el-menu>
+                </div>
+            </el-header>
+        </el-container>
+
+        <el-container style="height: auto;">
+            <!--左侧边栏-->
+            <el-aside style="border: 1px solid #eee;width: 13%;background-color: rgb(244,245,245);">
+                <div style="margin-right: 18px;float: right;margin-top: 150px;height: auto;width: 50px;">
+                    <!--点赞-->
+                    <el-badge :value=post.likes class="item">
+                        <el-button circle>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-icon"></use>
+                            </svg>
+                        </el-button>
+                    </el-badge>
+                    <!--踩-->
+                    <el-badge :value=post.step class="item">
+                        <el-button circle>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-cai"></use>
+                            </svg>
+                        </el-button>
+                    </el-badge>
+                    <!--评论-->
+                    <el-badge :value=post.comments class="item">
+                        <el-button circle>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-pinglun"></use>
+                            </svg>
+                        </el-button>
+                    </el-badge>
+                    <!--收藏-->
+                    <el-badge :value=post.collection class="item">
+                        <el-button circle>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-shoucangxiao1"></use>
+                            </svg>
+                        </el-button>
+                    </el-badge>
+                </div>
+            </el-aside>
+
+            <!--主要内容-->
+            <el-main style="border: 1px solid #eee; background-color: rgb(244,245,245);height: auto;">
+                <div id="main">
+                    <!--标题-->
+                    <el-row style="margin-top: 20px;">
+                        <el-col :span="24">
+                            <div id="title" style="font-size: 24px;" v-html="post.title"></div>
+                        </el-col>
+                    </el-row>
+                    <!--用户和发布时间-->
+                    <el-row>
+                        <el-col :span="24">
+                            <div id="time" style="font-size: 14px; color:rgb(109,117,125)" v-html="'发布于'+post.time">
+                            </div>
+                            <div id="author" style="font-size: 14px; color:rgb(109,117,125)" v-html="'作者'+post.author">
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <!--内容-->
+                    <el-row>
+                        <el-col :span="24">
+                            <div id="content" style="font-size: 16px;line-height: 150%;white-space:pre-line;"
+                                v-html="post.content"></div>
+                        </el-col>
+                    </el-row>
+                </div>
+
+                <!--右侧边栏-->
+                <div id="card">
+                    <!--用户信息-->
+                    <div style="margin-left: 20px;margin-top: 20px;">
+                        <!--头像-->
+                        <div style="display: inline-block;">
+                            <el-avatar icon="el-icon-user-solid"></el-avatar>
+                        </div>
+                        <!--用户名-->
+                        <div style="display: inline-block;margin-left: 10px;vertical-align:-60%;">
+                            <el-row>
+                                <el-col :span="24">
+                                    <div style="font-size: 22px" v-html="post.author"></div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </div>
+
+                    <!--按钮-->
+                    <div style="margin-left: 20px;">
+                        <el-button type="primary">关注</el-button>
+                        <el-button type="primary" plain>私信</el-button>
+                    </div>
+
+                    <!--分割线-->
+                    <hr style="margin-top: 15px;">
+
+                    <!--食品信息卡片-->
+                    <div>
+                        <el-row style="margin-top: 20px;">
+                            <el-col :span="24">
+                                <div style="font-size: 22px;">食品信息卡片</div>
+                            </el-col>
+                        </el-row>
+                        <el-row style="margin-top: 20px;">
+                            <el-col :span="24">
+                                <div style="font-size: 18px;" v-html="'食品：'+post.food"></div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24">
+                                <div style="font-size: 18px;" v-html="'饭堂：'+post.canteen"></div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24">
+                                <div style="font-size: 18px;" v-html="'店铺：'+post.shop"></div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24">
+                                <div style="font-size: 18px;" v-html="'价格：'+post.price"></div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </div>
+
+                <!--评论-->
+                <div id="comments">
+                    <div class="comment" style="margin-top: 25px;">
+                        <el-input type="textarea" :rows="3" placeholder="写下你的评论..." v-model="textarea"
+                            @focus="publishButton()"></el-input>
+                        <div id="publishButton"
+                            style="margin-top: 15px;margin-left: auto; border:1px solid #eee;width: 127px; display: none;">
+                            <el-button type="danger" round size="small" style="margin-left: auto;">发布</el-button>
+                            <el-button round size="small">取消</el-button>
+                        </div>
+                    </div>
+                    <div class="comment" style="font-size: 22px;" v-html="'全部评论 '+post.comments"></div>
+
+                    <div v-for="item in commentArray">
+                        <!--用户信息-->
+                        <div class="comment" style="width: auto;">
+                            <!--头像-->
+                            <div style="display: inline-block;">
+                                <el-avatar icon="el-icon-user-solid"></el-avatar>
+                            </div>
+                            <!--用户名和评论时间-->
+                            <div style="display: inline-block;margin-left: 10px;vertical-align:10%;">
+                                <div style="font-size: 16px" v-html="item.userName"></div>
+                                <div style="font-size: 12px;color: rgb(109,117,125);margin-top: 5px;"
+                                    v-html="item.time"></div>
+                            </div>
+
+                        </div>
+                        <!--内容-->
+                        <div class="comment" style="font-size: 16px; white-space:pre-line;margin-bottom: 0;"
+                            v-html="item.content"></div>
+
+                        <div style="margin-bottom: 20px;">
+                            <!--点赞-->
+                            <div id="likeClick" style="margin-left: 5%;margin-top: 10px;display: inline-block;">
+                                <svg class="icon" aria-hidden="true" style="width:1.3em" @click="like">
+                                    <use xlink:href="#icon-icon"></use>
+                                    <set attributeName="fill" to="red" begin="click" />
+                                </svg>
+                            </div>
+
+                            <!--点赞数-->
+                            <div id="likeNum"
+                                style="margin-left: 0;display: inline-block;vertical-align: 20%;font-size: 16px;color: rgb(109,117,125)"
+                                v-html="item.likes"></div>
+
+                            <!--踩-->
+                            <div style="margin-left: 2%;margin-top: 10px;display: inline-block;">
+                                <svg class="icon" aria-hidden="true" style="width:1.3em" @click="step">
+                                    <use xlink:href="#icon-cai"></use>
+                                    <set attributeName="fill" to="blue" begin="click" />
+                                </svg>
+                            </div>
+
+                            <!--踩数-->
+                            <div id="stepNum"
+                                style="margin-left: 0;display: inline-block;vertical-align: 20%;font-size: 16px;color: rgb(109,117,125)"
+                                v-html="item.step"></div>
+
+                            <!--评论-->
+                            <div style="margin-left: 2%;margin-top: 10px;display: inline-block;">
+                                <svg class="icon" aria-hidden="true" style="width:1.3em">
+                                    <use xlink:href="#icon-pinglun"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-main>
+        </el-container>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="element-ui/lib/index.js"></script>
+    <script src="js/iconfont.js"></script>
+    <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+    <script>
+        new Vue({
+            el: "#app",
+            mounted() {
+                this.getData();
+            },
+
+            methods: {
+                //获取帖子和评论数据
+                getData() {
+                    var post = localStorage.getItem("post");
+                    var postId;
+                    if (post != null) {
+                        var postObj = JSON.parse(post);
+                        postId = postObj.id;
+                    }
+                    //模拟
+                    postId = "1";
+
+                    var commentNum = 0;
+                    axios({
+                        method: 'post',
+                        url: '/post/view',
+                        data: postId,
+                        headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+                    }).then(resp => {
+                        console.log(resp.data);
+                        this.post = resp.data.data;
+                        commentNum = resp.data.data.comments;
+                    });
+
+                    /* if(commentNum>0){
+                        axios({
+                            methods:"post",
+                            url:"/comment/view",
+                        }).then(resp=>{
+                            console.log(resp.data);
+                            this.commentArray=resp.data.data.content;
+                        })
+                    } */
+                },
+
+                //显示发布按钮
+                publishButton() {
+                    document.getElementById("publishButton").style.display = "block";
+                },
+
+                //给评论点赞
+                like() {
+                    if (this.likeCount) {
+                        document.getElementById("likeNum").innerHTML++;
+                        this.likeCount = false;
+                        this.stepCount = false;
+                    }
+                },
+
+                //给评论踩
+                step() {
+                    if (this.stepCount) {
+                        document.getElementById("stepNum").innerHTML++;
+                        this.likeCount = false;
+                        this.stepCount = false;
+                    }
+                }
+            },
+
+            data() {
+                return {
+                    activeIndex: '1',
+                    likeCount: true,
+                    stepCount: true,
+                    post: {
+                        title: '',
+                        time: '',
+                        author: '',
+                        likes: '',
+                        step: '',
+                        comments: '',
+                        collection: '',
+                        food: '',
+                        content: '',
+                        canteen: '',
+                        shop: '',
+                        price: '',
+                        path: '',
+                    },
+
+                    commentArray: [{
+                        commentId: 1,
+                        content: '哈哈，写评论送饮料，我想起来了，我出差住宾馆，前台小姐姐说，写评论给你免费升级',
+                        likes: 6,
+                        parentId: 8,
+                        step: 2,
+                        time: '2022-11-11 12:12:46',
+                        userName: '故乡',
+                    },
+                    {
+                        commentId: 2,
+                        content: '到收藏夹吃灰吧',
+                        likes: 2,
+                        parentId: 8,
+                        step: 5,
+                        time: '2022-11-12 11:15:46',
+                        userName: '花败花开',
+                    }
+                    ],
+
+                    textarea: ''
+                }
+            },
+
+            watch: {
+
+            }
+        })
+    </script>
+</body>

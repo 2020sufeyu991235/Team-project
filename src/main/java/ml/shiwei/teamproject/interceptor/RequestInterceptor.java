@@ -1,15 +1,17 @@
 package ml.shiwei.teamproject.interceptor;
 
-<<<<<<< HEAD
+//这里不知道为什么报错
+//<<<<<<< HEAD
 import com.fasterxml.jackson.databind.ObjectMapper;
-=======
->>>>>>> 465d208ea657159c219d55339d55400d3138c55a
+//=======
+//>>>>>>> 465d208ea657159c219d55339d55400d3138c55a
 import io.jsonwebtoken.Claims;
 import ml.shiwei.teamproject.service.ResourceService;
 import ml.shiwei.teamproject.service.TokenService;
 import ml.shiwei.teamproject.utils.token.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +25,7 @@ import java.util.List;
  * @date: 2022/11/5
  * @description: 请求拦截器
  */
-@Configuration
+@Component
 public class RequestInterceptor implements HandlerInterceptor {
     @Autowired
     TokenService tokenService;

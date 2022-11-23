@@ -25,4 +25,6 @@ public interface PostDao extends JpaRepository<Post,Long> {
     @Modifying
     @Query(value="select * from post where canteen=?1 or canteen=?2",nativeQuery = true)
     List<Post> findByCanteen(String canteen1, String canteen2);
+
+    Post findById(long id);
 }

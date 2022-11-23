@@ -50,4 +50,15 @@ public class PostController {
         }
         return new Result(ResultCode.PostEmptyOrEnterError);
     }
+
+    //根据帖子id返回帖子信息
+    @RequestMapping("/post/view")
+    public Result view(@RequestBody String postId){
+        long id=Integer.parseInt(postId);
+        Map<String,String> map=postService.getList(id);
+        if(map!=null){
+            return new Result(ResultCode.Success,map);
+        }
+        return new Result(ResultCode.PostEmptyOrEnterError);
+    }
 }

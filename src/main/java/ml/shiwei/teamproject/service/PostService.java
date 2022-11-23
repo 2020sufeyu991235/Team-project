@@ -26,4 +26,6 @@ public interface PostService {
      * @author swl
      **/
     List<Map<String,String>> getList(String canteen);
+
+    Map<String,String> getList(long id);
 }

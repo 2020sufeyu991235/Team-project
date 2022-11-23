@@ -83,4 +83,28 @@ public class PostServiceImpl implements PostService {
         }
         return null;
     }
+
+    @Override
+    public Map<String, String> getList(long id) {
+        Post post=postDao.findById(id);
+        if(post!=null){
+            Map<String,String> map=new HashMap<>();
+            map.put("title",post.getTitle());
+            map.put("time",String.valueOf(post.getTime()));
+            long userId=post.getUserId();
+            map.put("author",userDao.findById(userId).getUserName());
+            map.put("likes",String.valueOf(post.getLikes()));
+            map.put("step",String.valueOf(post.getStep()));
+            map.put("comments",String.valueOf(post.getComments()));
+            map.put("collection","0");
+            map.put("food",post.getFood());
+            map.put("content",post.getContent());
+            map.put("canteen",post.getCanteen());
+            map.put("shop",post.getShop());
+            map.put("price",String.valueOf(post.getPrice()));
+            map.put("path","");
+            return map;
+        }
+        return null;
+    }
 }
