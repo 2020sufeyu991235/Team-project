@@ -17,7 +17,7 @@ class PostServiceImplTest {
 
     @Test
     void getList() {
-        List<Map<String,String>> list=postService.getList("一饭");
+        List<Map<String,String>> list=postService.getListByCanteen("一饭");
         list.forEach(System.out::println);
     }
 }

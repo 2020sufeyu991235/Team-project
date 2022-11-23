@@ -49,7 +49,7 @@ public class UserController {
                 Map<String,String> map=new HashMap<>();
                 map.put("string",token.getString());
                 map.put("name",user.getUserName());
-                map.put("id",String.valueOf(user.getId()));
+                map.put("id",String.valueOf(user_dao.getId()));
                 return new Result(ResultCode.Success,map);
             }
             else {
